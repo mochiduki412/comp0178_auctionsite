@@ -13,7 +13,7 @@
   <div class="row">
     <div class="col-md-5 pr-0">
       <div class="form-group">
-        <label for="keyword" class="sr-only">Search keyword:</label>
+        <label for="keyword" class="sr-only">Search for a keyword:</label>
 	    <div class="input-group">
           <div class="input-group-prepend">
             <span class="input-group-text bg-transparent pr-0 text-muted">
