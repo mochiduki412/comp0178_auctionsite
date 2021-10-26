@@ -3,7 +3,7 @@
 
 <div class="container">
 
-<h2 class="my-3">Browse listings 1</h2>
+<h3 class="my-3">Browse listings 1</h3>
 
 <div id="searchSpecs">
 <!-- When this form is submitted, this PHP page is what processes it.
