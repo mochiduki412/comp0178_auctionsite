@@ -8,9 +8,10 @@
 
 /* TODO #1: Connect to MySQL database (perhaps by requiring a file that
             already does this). */
-
+            
 
 /* TODO #2: Extract form data into variables. Because the form was a 'post'
+
             form, its data can be accessed via $POST['auctionTitle'], 
             $POST['auctionDetails'], etc. Perform checking on the data to
             make sure it can be inserted into the database. If there is an
