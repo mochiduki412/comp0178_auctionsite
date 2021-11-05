@@ -5,9 +5,9 @@
     }
 
     $SERVER = "localhost";
-    $USER = getenv('DBUSR') ?: "dbcw";
-    $PASS = getenv('DBPWD') ?: "tenmahasumi";
-    $DB = getenv('DB') ?: "databasecw";
+    $USER = getenv('DBUSR') ?: "db";
+    $PASS = getenv('DBPWD') ?: "db";
+    $DB = getenv('DB') ?: "db";
 
     function get_conn(){
         global $conn, $SERVER, $USER, $PASS, $DB;

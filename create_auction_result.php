@@ -15,9 +15,9 @@
     $_POST['auctionStartPrice'], $_POST['auctionDetails'], $_POST['auctionCategory'],
     $_POST['auctionEndDate']);
     if(!$stmt->execute()) die("Execution failed: " . $stmt->error);
-
     $stmt->close();
     $conn->close();
+    
     // Successful
     echo('<div class="text-center">Auction successfully created! <a href="FIXME">View your new listing.</a></div>');
 ?>
