@@ -3,15 +3,15 @@
 
 <div class="container my-5">
 <?php
-    $TABLE = "Auction";
-
-    $sql = "INSERT INTO " . $TABLE ."(title, reservePrice, startingPrice, 
-    itemDescription, itemCat, endDate) VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO Auction (title, sellerID, reservePrice, startingPrice, 
+    itemDescription, itemCat, endDate) VALUES (?, ?, ?, ?, ?, ?, ?)";
     $conn = get_conn();
     $stmt = $conn->prepare($sql);
     if(!$stmt) die("Statement prepare failed: " . $conn->error);
 
-    $stmt->bind_param("siisss", $_POST['auctionTitle'], $_POST['auctionReservePrice'],
+    // TODO: Securely identify the seller and link the right FK from the User.
+    $sellerID = 100;
+    $stmt->bind_param("siiisss", $_POST['auctionTitle'], $sellerID, $_POST['auctionReservePrice'],
     $_POST['auctionStartPrice'], $_POST['auctionDetails'], $_POST['auctionCategory'],
     $_POST['auctionEndDate']);
     if(!$stmt->execute()) die("Execution failed: " . $stmt->error);
