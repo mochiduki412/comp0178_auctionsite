@@ -3,20 +3,30 @@
     // Notify user of success/failure and redirect/give navigation options.
     require_once("db_utils.php");
 
-
     function verify_user($email, $pass){
-        $sql = sprintf("SELECT * FROM `User` WHERE `email`='%s'", $email);
+        $sql = sprintf("SELECT `email`, `password` FROM `User` WHERE `email`=?");
         $conn = get_conn();
-        $result = $conn->query($sql);
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('s', $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
         $conn->close();
-        printnl($result);
+        if ($result->num_rows == 0) {
+            return false;
+        }
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+        foreach ($rows as $row) {
+            if($row["password"] == $pass) return true;
+        }
+        return false;
     }
 
     $email = $_POST["email"];
     $pass = $_POST["password"];
     if(!verify_user($email, $pass)){
         echo('<div class="text-center">Login attempt failed.</div>');
-        header("refresh:3;url=index.php");
+        header("refresh:5;url=index.php");
     } else{
         // For now, I will just set session variables and redirect.
         session_start();
