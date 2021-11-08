@@ -25,18 +25,15 @@
     $email = $_POST["email"];
     $pass = $_POST["password"];
     if(!verify_user($email, $pass)){
-        echo('<div class="text-center">Login attempt failed.</div>');
+        echo('<div class="text-center">Failed to login.</div>');
         header("refresh:5;url=index.php");
     } else{
-        // For now, I will just set session variables and redirect.
         session_start();
         $_SESSION['logged_in'] = true;
-        $_SESSION['username'] = "test";
-        $_SESSION['account_type'] = "buyer";
+        $_SESSION['username'] = $email; 
+        $_SESSION['account_type'] = "buyer"; //Our DB ignores type col for now. Need to discuss if we want to add later.
 
         echo('<div class="text-center">You are now logged in! You will be redirected shortly.</div>');
-        header("refresh:5;url=index.php"); // Redirect to index after 5 seconds
+        header("refresh:5;url=index.php");
     }
-
-    
 ?>

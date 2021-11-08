@@ -55,7 +55,6 @@
     $stmt->close();
     $conn->close();
 
-    // created account. TODO: implment redirection
     echo('<div class="text-center">Account created</div>');
-
+    header("refresh:5;url=index.php")
 ?>
