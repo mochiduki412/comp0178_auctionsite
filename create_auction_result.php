@@ -7,7 +7,7 @@
     itemDescription, itemCat, endDate) VALUES (?, ?, ?, ?, ?, ?, ?)";
     $conn = get_conn();
     $stmt = $conn->prepare($sql);
-    if(!$stmt) die("Statement prepare failed: " . $conn->error);
+    if(!$stmt) die("Prepare failed: " . $conn->error);
 
     // TODO: Securely identify the seller and link the right FK from the User.
     $sellerID = 100;

@@ -4,20 +4,12 @@
     require_once("db_utils.php");
 
     function verify_user($email, $pass){
-        $sql = sprintf("SELECT `email`, `password` FROM `User` WHERE `email`=?");
-        $conn = get_conn();
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param('s', $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $stmt->close();
-        $conn->close();
-        if ($result->num_rows == 0) {
-            return false;
-        }
+        static $sql = "SELECT `email`, `password` FROM `User` WHERE `email`=?";
+        $result = prepare_bind_excecute($sql, "s", $email);
         $rows = $result->fetch_all(MYSQLI_ASSOC);
-        foreach ($rows as $row) {
-            if($row["password"] == $pass) return true;
+        foreach ($rows as $row) { //shall has 0 or 1 row. Not sure where to put assertion yet.
+            $pass_hashed = $row["password"];
+            if(password_verify($pass, $pass_hashed)) return true;
         }
         return false;
     }
