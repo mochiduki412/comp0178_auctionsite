@@ -12,7 +12,7 @@
         $sql = "INSERT INTO Auction (title, sellerID, reservePrice, startingPrice, 
         itemDescription, itemCat, endDate) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $seller = $_SESSION['user']; // the user id as identifier for now.
-        prepare_bind_excecute($sql, "siiisss", 
+        prepare_bind_excecute($sql, "ssiisss", 
             $_POST['auctionTitle'], $seller, $_POST['auctionReservePrice'], 
             $_POST['auctionStartPrice'], $_POST['auctionDetails'], 
             $_POST['auctionCategory'], $_POST['auctionEndDate']);
