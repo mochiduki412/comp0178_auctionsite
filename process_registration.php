@@ -36,7 +36,7 @@
     * @return fixed 60 bits string.
     */
     function hash_pass($pass){
-        //Not to provide salt, use the default generated salt instad.
+        //Recommended to use the default salt generated from the function.
         //src: https://www.php.net/manual/en/function.password-hash.php
         return password_hash($pass, PASSWORD_BCRYPT);
     }

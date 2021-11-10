@@ -1,13 +1,13 @@
 <?php
-    function printnl($text)
-    {
-        echo nl2br("$text\n");
-    }
-
     $SERVER = "localhost";
     $USER = getenv('DBUSR') ?: "db";
     $PASS = getenv('DBPWD') ?: "db";
     $DB = getenv('DB') ?: "db";
+
+    function printnl($text)
+    {
+        echo nl2br("$text\n");
+    }
 
     function get_conn(){
         global $conn, $SERVER, $USER, $PASS, $DB;

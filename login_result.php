@@ -3,6 +3,8 @@
     // Notify user of success/failure and redirect/give navigation options.
     require_once("db_utils.php");
 
+    class UserNotFoundException extends Exception{};
+
     function verify_user($email, $pass){
         static $sql = "SELECT `email`, `password` FROM `User` WHERE `email`=?";
         $result = prepare_bind_excecute($sql, "s", $email);
@@ -14,6 +16,16 @@
         return false;
     }
 
+    function get_id_by_email($email){
+        $sql = "SELECT userId FROM `User` WHERE `email` = ?";
+        $result = prepare_bind_excecute($sql, 's', $email);
+        assert($result->num_row <= 1, "User email is not unique, check your db design");
+        if($result->num_rows == 0){
+            throw new UserNotFoundException("User not found"); //Shall not trigger in login.
+        }
+        return $result->fetch_row()[0]; //user id
+    }
+
     $email = $_POST["email"];
     $pass = $_POST["password"];
     if(!verify_user($email, $pass)){
@@ -22,7 +34,7 @@
     } else{
         session_start();
         $_SESSION['logged_in'] = true;
-        $_SESSION['username'] = $email; 
+        $_SESSION['user'] = get_id_by_email($email); //Use user id for session for now.
         $_SESSION['account_type'] = "buyer"; //Our DB ignores type col for now. Need to discuss if we want to add later.
 
         echo('<div class="text-center">You are now logged in! You will be redirected shortly.</div>');
