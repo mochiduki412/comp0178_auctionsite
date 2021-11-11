@@ -42,11 +42,21 @@ function restore_database()
     // Establish connection
     $connection = mysqli_connect('localhost', 'root', '')
         or die('Error connecting to MySQL server' . mysqli_error($connection));
+        
 
+    $mysql_database = "comp0178db";
+
+    // Drop database if it exists
+    printnl("Dropping old database...");
+    $drop_query = "DROP DATABASE IF EXISTS " . $mysql_database . ";";
+    mysqli_query($connection, $drop_query)
+        or die('Error making query' . mysqli_error($connection));
+    printnl("Successfully dropped database!");
+    
     // Define create database query
     printnl("Creating Database...");
-    $mysql_database = "comp0178db";
     $create_query = "CREATE DATABASE IF NOT EXISTS " . $mysql_database . ";";
+
 
     // Run create database query
     $create_result = mysqli_query($connection, $create_query)
