@@ -10,7 +10,7 @@
     }
 
     function get_conn(){
-        global $conn, $SERVER, $USER, $PASS, $DB;
+        global $SERVER, $USER, $PASS, $DB;
         $conn = new mysqli($SERVER, $USER, $PASS);
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);

@@ -5,6 +5,13 @@
     // options.
     require_once("db_utils.php");
     
+    function is_all_fields_set(){
+        if(isset($_POST['accountType']) and isset($_POST['email']) and 
+        isset($_POST['password']) and isset($_POST['passwordConfirmation'])){
+            return true;
+        }
+        return false;
+    }
 
     function validate_email_input($email)
     {
@@ -41,8 +48,23 @@
         return password_hash($pass, PASSWORD_BCRYPT);
     }
 
-    if (!isset($_POST['accountType']) or !isset($_POST['email']) or 
-        !isset($_POST['password']) or !isset($_POST['passwordConfirmation'])) {
+    function validate_password_strength($pass){
+        // Modified from
+        // src: https://www.muhlenberg.edu/offices/oit/about/policies_procedures/strong-passwords.html
+        // src: https://www.codexworld.com/how-to/validate-password-strength-in-php/
+        $uppercase = preg_match('@[A-Z]@', $pass);
+        $lowercase = preg_match('@[a-z]@', $pass);
+        $number    = preg_match('@[0-9]@', $pass);
+        $specialChars = preg_match('@[^\w]@', $pass);
+        $length = strlen($pass) >= 8 ? true : false;
+
+        if($uppercase && $lowercase && $number && $specialChars && $length){
+            return true;
+        }
+        return false;
+    }
+
+    if (!is_all_fields_set()) {
         die('All fields are required.');
     }
 
@@ -54,6 +76,8 @@
     if (!validate_email_input($email)) die('incorrect email input.');
     if ($pass != $pass_con) die('passwords must be the same.');
     if (exists_email($email)) die('email already exists');
+    if (!validate_password_strength($pass)){ die('password must contains at least 
+        1 uppercase character,1 lowercase character, 1 number and 1 special character.');}
 
     //validated, start to insert
     //generate UUID and hash the password. Change the table's structure accordingly!
