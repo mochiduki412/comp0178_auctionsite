@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 05, 2021 at 10:47 AM
+-- Generation Time: Nov 13, 2021 at 02:29 AM
 -- Server version: 5.7.33-0ubuntu0.18.04.1
 -- PHP Version: 7.4.25
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `Auction` (
   `auctionId` int(255) NOT NULL,
-  `sellerId` int(255) DEFAULT NULL,
+  `sellerId` varchar(255) DEFAULT NULL,
   `title` varchar(255) NOT NULL,
   `reservePrice` int(255) NOT NULL,
   `startingPrice` int(255) NOT NULL,
@@ -66,11 +66,11 @@ CREATE TABLE `Finished Auction` (
 --
 
 CREATE TABLE `User` (
-  `userId` int(255) NOT NULL,
-  `firstName` varchar(100) NOT NULL,
-  `lastName` varchar(100) NOT NULL,
-  `email` varchar(200) NOT NULL,
-  `password` varchar(20) NOT NULL
+  `userId` varchar(25) NOT NULL,
+  `firstName` varchar(30) DEFAULT NULL,
+  `lastName` varchar(30) DEFAULT NULL,
+  `email` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -87,7 +87,9 @@ ALTER TABLE `Auction`
 -- Indexes for table `User`
 --
 ALTER TABLE `User`
-  ADD PRIMARY KEY (`userId`);
+  ADD PRIMARY KEY (`userId`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `userId` (`userId`);
 
 --
 -- AUTO_INCREMENT for dumped tables
