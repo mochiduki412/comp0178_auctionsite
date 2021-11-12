@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.1.1deb3+bionic1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Oct 27, 2021 at 01:50 PM
--- Server version: 5.7.34
--- PHP Version: 7.4.21
+-- Host: localhost:3306
+-- Generation Time: Nov 05, 2021 at 10:47 AM
+-- Server version: 5.7.33-0ubuntu0.18.04.1
+-- PHP Version: 7.4.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,7 +29,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `Auction` (
   `auctionId` int(255) NOT NULL,
-  `sellerId` int(255) NOT NULL,
+  `sellerId` int(255) DEFAULT NULL,
+  `title` varchar(255) NOT NULL,
   `reservePrice` int(255) NOT NULL,
   `startingPrice` int(255) NOT NULL,
   `itemDescription` varchar(1000) NOT NULL,
@@ -87,6 +88,16 @@ ALTER TABLE `Auction`
 --
 ALTER TABLE `User`
   ADD PRIMARY KEY (`userId`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `Auction`
+--
+ALTER TABLE `Auction`
+  MODIFY `auctionId` int(255) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
