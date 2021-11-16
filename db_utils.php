@@ -30,4 +30,49 @@
         $conn->close();
         return $result;
     }
+
+    function redirect($url = "index.php", $msg = '', $after_seconds = 3){
+        echo(sprintf('<div class="text-center">%s</div>', $msg));
+        header(sprintf("refresh:%d;url=%s", $after_seconds, $url));
+    }
+
+    function isLoggedIn(){
+        session_start();
+        return (isset($_SESSION['logged_in']) and $_SESSION['logged_in'] == true) ? true: false;
+    }
+
+   /**
+    * Simple display sql query results into html table.
+    */
+    function displayTableFrom($results){
+        echo "<div class='container'>";
+        echo "<table class='table'>";
+        if($row = $results->fetch_assoc()){
+            // display attributes
+            echo "<thead>";
+            echo "<tr>";
+            foreach($row as $key => $val){
+                echo "<th>" . $key . "</th>";
+            }
+            echo "</tr>";
+            echo "</thead>";
+
+            // display query data
+            echo "<tbody>";
+            do{
+                echo "<tr>";
+                foreach($row as $key => $val){
+                    echo "<td>" . $val . "</td>";
+                }
+                echo "</tr>";
+            } while($row = $results->fetch_assoc());
+            echo "</tbody>";
+        }
+        echo "</table>";
+        echo "</div>";
+    }
+
+    function displayListFrom($results){
+        return null;
+    }
 ?>

@@ -32,11 +32,10 @@
     }
 
     /**
-    * Might change after more reading on PHP
-    * @return 23 hexidecimal digits string based on sys time.
+    * @return 13 hexidecimal digits string based on sys time.
     */
     function get_uuid(){
-        return uniqid('', true);
+        return uniqid('');
     }
 
     /**
@@ -80,7 +79,7 @@
         1 uppercase character,1 lowercase character, 1 number and 1 special character.');}
 
     //validated, start to insert
-    //generate UUID and hash the password. Change the table's structure accordingly!
+    //generate UUID and hash the password.
     $uuid = get_uuid();
     $pass_hashed = hash_pass($pass);
     $sql = 'INSERT INTO `User` (`userId`, `email`, `password`) VALUES (?, ?, ?);';

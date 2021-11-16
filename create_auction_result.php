@@ -18,7 +18,7 @@
             $_POST['auctionCategory'], $_POST['auctionEndDate']);
 
         // auction created
-        echo('<div class="text-center">Auction is successfully created! <a href="FIXME">View your new listing.</a></div>');
+        echo('<div class="text-center">Auction is successfully created! <a href="mylistings.php">View your new listing.</a></div>');
     }
 ?>
 </div>
