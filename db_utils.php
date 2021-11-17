@@ -34,17 +34,18 @@
     function redirect($url = "index.php", $msg = '', $after_seconds = 3){
         echo(sprintf('<div class="text-center">%s</div>', $msg));
         header(sprintf("refresh:%d;url=%s", $after_seconds, $url));
+        die();
     }
 
-    function isLoggedIn(){
+    function is_login(){
         session_start();
         return (isset($_SESSION['logged_in']) and $_SESSION['logged_in'] == true) ? true: false;
     }
 
    /**
-    * Simple display sql query results into html table.
+    * Simple display for sql query results into html table.
     */
-    function displayTableFrom($results){
+    function display_HTML_table_from($results){
         echo "<div class='container'>";
         echo "<table class='table'>";
         if($row = $results->fetch_assoc()){
@@ -72,7 +73,7 @@
         echo "</div>";
     }
 
-    function displayListFrom($results){
+    function display_list_from($results){
         return null;
     }
 ?>

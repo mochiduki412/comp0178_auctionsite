@@ -18,7 +18,7 @@
   // TODO: Loop through results and print them out as list items.
 
   session_start();
-  if(!isLoggedIn()){
+  if(!is_login()){
     redirect('browse.php', 'You are not logged in.');
     die();
   } else{ // logged in
@@ -31,7 +31,7 @@
       print_listing_li($row['auctionId'], $row['title'], $row['itemDescription'],
                         $row['reservePrice'], 1, new DateTime($row['endDate']));
     }
-    // displayTableFrom($results);
+    // display_HTML_table_from($results);
   }
 ?>
 

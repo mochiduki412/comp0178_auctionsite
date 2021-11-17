@@ -32,10 +32,20 @@
         echo('<div class="text-center">Failed to login.</div>');
         header("refresh:5;url=index.php");
     } else{
+        try{
+            $sql = "SELECT `userId`, `type` FROM `User` WHERE `email` = ?";
+            $result = prepare_bind_excecute($sql, 's', $email);
+            $row = $result->fetch_assoc();
+            $user_id = $row['userId'];
+            $type = $row['type'];
+        } catch(Exception $e) {
+            var_dump($e->getMessage()); // maybe learn and use logger later.
+        }
+
         session_start();
         $_SESSION['logged_in'] = true;
-        $_SESSION['user'] = get_id_by_email($email); //Use user id for session for now.
-        $_SESSION['account_type'] = "buyer"; //Our DB ignores type col for now. Need to discuss if we want to add later.
+        $_SESSION['user'] = $user_id;
+        $_SESSION['account_type'] = $type;
 
         echo('<div class="text-center">You are now logged in! You will be redirected shortly.</div>');
         header("refresh:5;url=index.php");
