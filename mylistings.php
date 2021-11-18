@@ -18,20 +18,17 @@
   // TODO: Loop through results and print them out as list items.
 
   session_start();
-  if(!is_login()){
-    redirect('browse.php', 'You are not logged in.');
-    die();
-  } else{ // logged in
-    $sql = "SELECT * FROM `Auction` WHERE `sellerId` = ?";
-    $results = prepare_bind_excecute($sql, 's', $_SESSION['user']);
-    while($row = $results->fetch_assoc()){
-      // Buggy! We need to change our ER design to:
-      // TODO 1: Record the number of bids (I presume the bid history).
-      // TODO 2: Record the current bid price.
-      print_listing_li($row['auctionId'], $row['title'], $row['itemDescription'],
-                        $row['reservePrice'], 1, new DateTime($row['endDate']));
-    }
-    // display_HTML_table_from($results);
+  if(!is_login()) redirect('browse.php', 'You are not logged in.');
+  
+  // logged in
+  $sql = "SELECT * FROM `Auction` WHERE `sellerId` = ?";
+  $results = prepare_bind_excecute($sql, 's', $_SESSION['user']);
+  while($row = $results->fetch_assoc()){
+    // Buggy! We need to change our ER design to:
+    // TODO 1: Record the number of bids (I presume the bid history).
+    // TODO 2: Record the current bid price.
+    print_listing_li($row['auctionId'], $row['title'], $row['itemDescription'],
+                      $row['reservePrice'], 1, new DateTime($row['endDate']));
   }
 ?>
 

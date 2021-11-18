@@ -89,7 +89,7 @@
         <div class="input-group-prepend">
           <span class="input-group-text">£</span>
         </div>
-	    <input type="number" class="form-control" id="bid" name="bidPrice">
+	    <input type="number" class="form-control" id="bid" name="bidPrice" value='0'>
       </div>
       <input type="hidden" id="itemId" name="itemId" value=<?php echo $_GET['item_id'] ?>>
       <button type="submit" class="btn btn-primary form-control">Place bid</button>

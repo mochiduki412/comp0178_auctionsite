@@ -12,12 +12,9 @@
         $sql = "INSERT INTO Auction (title, sellerID, reservePrice, startingPrice, 
                 itemDescription, itemCat, endDate) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try{
-            prepare_bind_excecute($sql, "ssiisss", $_POST['auctionTitle'], 
-                                $seller, $_POST['auctionReservePrice'], 
-                                $_POST['auctionStartPrice'], $_POST['auctionDetails'], 
-                                $_POST['auctionCategory'], $_POST['auctionEndDate']);
+            prepare_bind_excecute($sql, "ssiisss", $_POST['auctionTitle'], $seller, $_POST['auctionReservePrice'], 
+                            $_POST['auctionStartPrice'], $_POST['auctionDetails'], $_POST['auctionCategory'], $_POST['auctionEndDate']);
         } catch(Exception $e){
-            // TODO: log the error later
             echo('<div class="text-center">Internal error, please try again.</div>');
         }
 

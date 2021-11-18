@@ -25,9 +25,9 @@
     function prepare_bind_excecute($sql, $col_types, ...$cols){
         $conn = get_conn();
         $stmt = $conn->prepare($sql);
-        if (!$stmt) die("Preparation failed: " . $conn->error);
+        if (!$stmt) die("Preparation failed: " . $conn->error); //TODO: raise error instead
         $stmt->bind_param($col_types, ...$cols);
-        if (!$stmt->execute()) die("Execution failed: " . $stmt->error);
+        if (!$stmt->execute()) die("Execution failed: " . $stmt->error); //TODO: raise error instead
         $result = $stmt->get_result();
         $stmt->close();
         $conn->close();
@@ -45,7 +45,9 @@
     }
 
     function is_login(){
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         return (isset($_SESSION['logged_in']) and $_SESSION['logged_in'] == true) ? true: false;
     }
 

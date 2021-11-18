@@ -40,7 +40,7 @@
             $user_id = $row['userId'];
             $type = $row['type'];
         } catch(Exception $e) {
-            var_dump($e->getMessage()); // maybe learn and use logger later.
+            var_dump($e->getMessage());
         }
 
         // set sessions accordingly.
@@ -49,6 +49,6 @@
         $_SESSION['user'] = $user_id;
         $_SESSION['account_type'] = $type;
 
-        redirect($_SERVER['HTTP_REFERER'], 'You are now logged in! You will be redirected shortly', 3);
+        redirect($_SERVER['HTTP_REFERER'] or 'index.php', 'You are now logged in! You will be redirected shortly', 3);
     }
 ?>
