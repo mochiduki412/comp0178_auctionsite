@@ -1,4 +1,7 @@
 <?php
+    /*
+    * Wenyong: Will refactor after this file gathers some.
+    */
     $SERVER = "localhost";
     $USER = getenv('DBUSR') ?: "db";
     $PASS = getenv('DBPWD') ?: "db";
@@ -31,8 +34,12 @@
         return $result;
     }
 
-    function redirect($url = "index.php", $msg = '', $after_seconds = 3){
+    function print_msg($msg){
         echo(sprintf('<div class="text-center">%s</div>', $msg));
+    }
+
+    function redirect($url = "index.php", $msg = '', $after_seconds = 3){
+        print_msg($msg);
         header(sprintf("refresh:%d;url=%s", $after_seconds, $url));
         die();
     }
@@ -42,7 +49,7 @@
         return (isset($_SESSION['logged_in']) and $_SESSION['logged_in'] == true) ? true: false;
     }
 
-   /**
+   /*
     * Simple display for sql query results into html table.
     */
     function display_HTML_table_from($results){

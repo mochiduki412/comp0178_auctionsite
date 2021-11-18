@@ -85,6 +85,5 @@
     $sql = 'INSERT INTO `User` (`userId`, `email`, `password`, `type`) VALUES (?, ?, ?, ?);';
     prepare_bind_excecute($sql, "ssss", $uuid, $email, $pass_hashed, $type);
     
-    echo('<div class="text-center">Account created</div>');
-    header("refresh:5;url=index.php")
+    redirect('index.php', 'Account created');
 ?>

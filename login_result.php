@@ -32,6 +32,7 @@
         echo('<div class="text-center">Failed to login.</div>');
         header("refresh:5;url=index.php");
     } else{
+        // query user's information.
         try{
             $sql = "SELECT `userId`, `type` FROM `User` WHERE `email` = ?";
             $result = prepare_bind_excecute($sql, 's', $email);
@@ -42,12 +43,12 @@
             var_dump($e->getMessage()); // maybe learn and use logger later.
         }
 
+        // set sessions accordingly.
         session_start();
         $_SESSION['logged_in'] = true;
         $_SESSION['user'] = $user_id;
         $_SESSION['account_type'] = $type;
 
-        echo('<div class="text-center">You are now logged in! You will be redirected shortly.</div>');
-        header("refresh:5;url=index.php");
+        redirect($_SERVER['HTTP_REFERER'], 'You are now logged in! You will be redirected shortly', 3);
     }
 ?>
