@@ -37,7 +37,9 @@
         $_SESSION['user'] = get_id_by_email($email); //Use user id for session for now.
         $_SESSION['account_type'] = "buyer"; //Our DB ignores type col for now. Need to discuss if we want to add later.
 
-        echo('<div class="text-center">You are now logged in! You will be redirected shortly.</div>');
-        header("refresh:5;url=index.php");
+        echo "<script>
+            alert('Successfully logged in');
+            window.location.href='index.php';
+            </script>";
     }
 ?>

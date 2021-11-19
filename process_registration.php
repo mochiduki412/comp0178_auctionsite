@@ -7,7 +7,7 @@
     
     function is_all_fields_set(){
         if(isset($_POST['accountType']) and isset($_POST['email']) and 
-        isset($_POST['password']) and isset($_POST['passwordConfirmation'])){
+        isset($_POST['password']) and isset($_POST['passwordConfirm'])){
             return true;
         }
         return false;
@@ -71,7 +71,7 @@
     $type = $_POST['accountType'];
     $email = $_POST['email'];
     $pass = $_POST['password'];
-    $pass_con = $_POST['passwordConfirmation'];
+    $pass_con = $_POST['passwordConfirm'];
 
     if (!validate_email_input($email)) die('incorrect email input.');
     if ($pass != $pass_con) die('passwords must be the same.');
@@ -86,6 +86,8 @@
     $sql = 'INSERT INTO `User` (`userId`, `email`, `password`) VALUES (?, ?, ?);';
     prepare_bind_excecute($sql, "sss", $uuid, $email, $pass_hashed);
     
-    echo('<div class="text-center">Account created</div>');
-    header("refresh:5;url=index.php")
+    echo "<script>
+        alert('Successfully created account');
+        window.location.href='index.php';
+        </script>";
 ?>
