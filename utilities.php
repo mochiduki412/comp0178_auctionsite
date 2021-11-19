@@ -60,5 +60,3 @@ function print_listing_li($item_id, $title, $desc, $price, $num_bids, $end_time)
   </li>'
   );
 }
-
-?>
