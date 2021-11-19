@@ -40,6 +40,7 @@
 
     function redirect($url = "index.php", $msg = '', $after_seconds = 3){
         print_msg($msg);
+        echo(sprintf("<script>alert(%s);</script>", $msg));
         header(sprintf("refresh:%d;url=%s", $after_seconds, $url));
         die();
     }
