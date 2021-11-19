@@ -1,13 +1,16 @@
 <?php include_once("header.php")?>
+<?php require_once("db_utils.php")?>
 
 <?php
-/* (Uncomment this block to redirect people without selling privileges away from this page)
   // If user is not logged in or not a seller, they should not be able to
   // use this page.
-  if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 'seller') {
-    header('Location: browse.php');
+  if(!is_login()){
+    redirect('index.php', 'You are not logged in.');
   }
-*/
+
+  if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 'seller') {
+    redirect('index.php', 'You are not a seller.');
+  }
 ?>
 
 <div class="container">
@@ -44,9 +47,9 @@
           <div class="col-sm-10">
             <select class="form-control" id="auctionCategory" name="auctionCategory">
               <option selected>Choose...</option>
-              <option value="Fill me in">Fill me in</option>
-              <option value="with options">with options</option>
-              <option value="populated from a database?">populated from a database?</option>
+              <option value="Sports">Sports</option>
+              <option value="Food">Food</option>
+              <option value="Others">Others</option>
             </select>
             <small id="categoryHelp" class="form-text text-muted"><span class="text-danger">* Required.</span> Select a category for this item.</small>
           </div>

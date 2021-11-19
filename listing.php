@@ -1,18 +1,25 @@
 <?php include_once("header.php")?>
 <?php require("utilities.php")?>
+<?php require_once("db_utils.php")?>
+
 
 <?php
   // Get info from the URL:
   $item_id = $_GET['item_id'];
 
   // TODO: Use item_id to make a query to the database.
+  $sql = "SELECT * FROM `Auction` WHERE `auctionId` = ?";
+  $results = prepare_bind_excecute($sql, 'i', $item_id);
+  if(!$row = $results->fetch_assoc()){
+    print_msg('Item not found.');
+    die();
+  }
 
-  // DELETEME: For now, using placeholder data.
-  $title = "Placeholder title";
-  $description = "Description blah blah blah";
+  $title = $row['title'];
+  $description = $row['itemDescription'];
   $current_price = 30.50;
   $num_bids = 1;
-  $end_time = new DateTime('2020-11-02T00:00:00');
+  $end_time = new DateTime($row['endDate']);
 
   // TODO: Note: Auctions that have ended may pull a different set of data,
   //       like whether the auction ended in a sale or was cancelled due
@@ -82,8 +89,9 @@
         <div class="input-group-prepend">
           <span class="input-group-text">£</span>
         </div>
-	    <input type="number" class="form-control" id="bid">
+	    <input type="number" class="form-control" id="bid" name="bidPrice" value='0'>
       </div>
+      <input type="hidden" id="itemId" name="itemId" value=<?php echo $_GET['item_id'] ?>>
       <button type="submit" class="btn btn-primary form-control">Place bid</button>
     </form>
 <?php endif ?>
