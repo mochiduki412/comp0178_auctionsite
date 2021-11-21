@@ -12,6 +12,7 @@
         echo nl2br("$text\n");
     }
 
+    // ===== DB connection relateds =====
     function get_conn(){
         global $SERVER, $USER, $PASS, $DB;
         $conn = new mysqli($SERVER, $USER, $PASS);
@@ -34,6 +35,7 @@
         return $result;
     }
 
+    // ===== page relateds =====
     function print_msg($msg){
         echo(sprintf('<div class="text-center">%s</div>', $msg));
     }
@@ -85,5 +87,25 @@
 
     function display_list_from($results){
         return null;
+    }
+
+    // ===== ORM relateds =====
+    function get_max_bid_from($auctionId){
+        static $sql = "SELECT MAX(bidPrice) FROM `Bid` WHERE `auctionId`= ?";
+        $bid_max = 0;
+        $res = prepare_bind_excecute($sql, 's', $auctionId);
+        if($res === null) throw new Exception("No bid yet");
+        $bid_max = $res->fetch_row()[0];
+        return $bid_max;
+    }
+
+    function get_bids_from_auction($auctionId){
+        static $sql = "SELECT * FROM `Bid` WHERE `auctionId`=? ORDER BY bidPrice DESC, createdDate";
+        return prepare_bind_excecute($sql, 's', $auctionId);
+    }
+
+    function get_bids_from_user($user_id){
+        static $sql = "SELECT * FROM `Bid` LEFT JOIN `Auction` ON Bid.auctionId = Auction.auctionId WHERE `bidderId` = ?";
+        return prepare_bind_excecute($sql, 's', $user_id);
     }
 ?>

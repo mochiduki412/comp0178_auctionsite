@@ -17,7 +17,7 @@
 
   $title = $row['title'];
   $description = $row['itemDescription'];
-  $current_price = 30.50;
+  $current_price = get_max_bid_from($item_id);
   $num_bids = 1;
   $end_time = new DateTime($row['endDate']);
 
