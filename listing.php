@@ -20,7 +20,7 @@
   $bid_max_info = get_max_bid_info_by_auction($item_id)->fetch_assoc();
   $bid_max_amount = $bid_max_info['bidPrice'];
   $bid_max_user = $bid_max_info['bidderId'];
-  $num_bids = 1;
+  // $num_bids = get_num_bid();
   $end_time = new DateTime($row['endDate']);
 
   // TODO: Note: Auctions that have ended may pull a different set of data,

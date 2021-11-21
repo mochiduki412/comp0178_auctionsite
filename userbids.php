@@ -21,12 +21,18 @@
   } catch(Exception $e){
     error_log($e);
     print_msg("Internal error, please try later.");
+    die();
   }
-
   
   while($row = $results->fetch_assoc()){
-    print_listing_li($row['auctionId'], $row['title'], $row['itemDescription'],
-                      $row['bidPrice'], 1, new DateTime($row['endDate']));
+    print_listing_li(
+      $row['auctionId'], 
+      $row['title'],
+      $row['itemDescription'],
+      $row['bidPrice'],
+      get_num_bid_by_auction($row['auctionId']),
+      new DateTime($row['endDate'])
+    );
   }
 ?>
 

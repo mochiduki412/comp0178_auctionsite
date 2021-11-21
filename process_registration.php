@@ -71,19 +71,26 @@
     $email = $_POST['email'];
     $pass = $_POST['password'];
     $pass_con = $_POST['passwordConfirm'];
+    $fname = $_POST['firstName'];
+    $lname = $_POST['lastName'];
 
     if (!validate_email_input($email)) die('incorrect email input.');
-    if ($pass != $pass_con) die('passwords must be the same.');
     if (exists_email($email)) die('email already exists');
+    if ($pass != $pass_con) die('passwords must be the same.');
     if (!validate_password_strength($pass)){ die('password must contains at least 
         1 uppercase character,1 lowercase character, 1 number and 1 special character.');}
 
     //validated, start to insert
-    //generate UUID and hash the password.
     $uuid = get_uuid();
     $pass_hashed = hash_pass($pass);
-    $sql = 'INSERT INTO `User` (`userId`, `email`, `password`, `type`) VALUES (?, ?, ?, ?);';
-    prepare_bind_excecute($sql, "ssss", $uuid, $email, $pass_hashed, $type);
+    $sql = 'INSERT INTO `User` (`userId`, `firstname`, `lastname`, `email`, `password`, `type`) VALUES (?, ?, ?, ?, ?, ?);';
+    try{
+        prepare_bind_excecute($sql, "ssssss", $uuid, $fname, $lname, $email, $pass_hashed, $type);
+    } catch(Exception){
+        error_log($e);
+        print_msg("Internal error, please try later.");
+        die();
+    }
     
     redirect('index.php', 'Account created');
 ?>
