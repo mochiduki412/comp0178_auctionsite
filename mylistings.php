@@ -27,8 +27,14 @@
     // Buggy! We need to change our ER design to:
     // TODO 1: Record the number of bids (I presume the bid history).
     // TODO 2: Record the current bid price.
-    print_listing_li($row['auctionId'], $row['title'], $row['itemDescription'],
-                      $row['reservePrice'], 1, new DateTime($row['endDate']));
+    print_listing_li(
+      $row['auctionId'], 
+      $row['title'],
+      $row['itemDescription'],
+      $row['bidPrice'],
+      get_num_bid_by_auction($row['auctionId']),
+      new DateTime($row['endDate'])
+    );
   }
 ?>
 

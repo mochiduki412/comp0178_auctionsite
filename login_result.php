@@ -19,7 +19,7 @@
     function get_id_by_email($email){
         $sql = "SELECT userId FROM `User` WHERE `email` = ?";
         $result = prepare_bind_excecute($sql, 's', $email);
-        assert($result->num_row <= 1, "User email is not unique, check your db design");
+        assert($result->num_rows <= 1, "User email is not unique, check your db design");
         if($result->num_rows == 0){
             throw new UserNotFoundException("User not found"); //Shall not trigger in login.
         }

@@ -12,6 +12,7 @@
         echo nl2br("$text\n");
     }
 
+    // ===== DB connection relateds =====
     function get_conn(){
         global $SERVER, $USER, $PASS, $DB;
         $conn = new mysqli($SERVER, $USER, $PASS);
@@ -34,6 +35,7 @@
         return $result;
     }
 
+    // ===== page relateds =====
     function print_msg($msg){
         echo(sprintf('<div class="text-center">%s</div>', $msg));
     }
@@ -85,5 +87,34 @@
 
     function display_list_from($results){
         return null;
+    }
+
+    // ===== ORM-like relateds =====
+    function get_max_bid_price_by_auction($auctionId){
+        static $sql = "SELECT MAX(bidPrice) FROM `Bid` WHERE `auctionId`= ?";
+        $res = prepare_bind_excecute($sql, 'i', $auctionId);
+        return $res;
+    }
+
+    function get_max_bid_info_by_auction($auctionId){
+        // may be faster to use "ORDER BY * LIMIT 1" instead;
+        static $sql = "SELECT * FROM `Bid` WHERE bidPrice = (SELECT MAX(bidPrice) FROM Bid WHERE auctionId = ?)";
+        $res = prepare_bind_excecute($sql, 'i', $auctionId);
+        return $res;
+    }
+
+    function get_bids_by_auction($auctionId){
+        static $sql = "SELECT * FROM `Bid` WHERE `auctionId`=? ORDER BY bidPrice DESC, createdDate";
+        return prepare_bind_excecute($sql, 'i', $auctionId);
+    }
+
+    function get_bids_by_user($user_id){
+        static $sql = "SELECT * FROM `Bid` LEFT JOIN `Auction` ON Bid.auctionId = Auction.auctionId WHERE `bidderId` = ?";
+        return prepare_bind_excecute($sql, 's', $user_id);
+    }
+
+    function get_num_bid_by_auction($auctionId){
+        static $sql = "SELECT COUNT(*) FROM `Bid` WHERE auctionId = ?";
+        return (int) prepare_bind_excecute($sql, 'i', $auctionId)->fetch_row()[0];
     }
 ?>
