@@ -90,21 +90,25 @@
     }
 
     // ===== ORM relateds =====
-    function get_max_bid_from($auctionId){
+    function get_max_bid_price_by_auction($auctionId){
         static $sql = "SELECT MAX(bidPrice) FROM `Bid` WHERE `auctionId`= ?";
-        $bid_max = 0;
         $res = prepare_bind_excecute($sql, 's', $auctionId);
-        if($res === null) throw new Exception("No bid yet");
-        $bid_max = $res->fetch_row()[0];
-        return $bid_max;
+        return $res;
     }
 
-    function get_bids_from_auction($auctionId){
+    function get_max_bid_info_by_auction($auctionId){
+        // may be faster to use "ORDER BY * LIMIT 1" instead;
+        static $sql = "SELECT * FROM `Bid` WHERE bidPrice = (SELECT MAX(bidPrice) FROM Bid WHERE auctionId = ?)";
+        $res = prepare_bind_excecute($sql, 's', $auctionId);
+        return $res;
+    }
+
+    function get_bids_by_auction($auctionId){
         static $sql = "SELECT * FROM `Bid` WHERE `auctionId`=? ORDER BY bidPrice DESC, createdDate";
         return prepare_bind_excecute($sql, 's', $auctionId);
     }
 
-    function get_bids_from_user($user_id){
+    function get_bids_by_user($user_id){
         static $sql = "SELECT * FROM `Bid` LEFT JOIN `Auction` ON Bid.auctionId = Auction.auctionId WHERE `bidderId` = ?";
         return prepare_bind_excecute($sql, 's', $user_id);
     }

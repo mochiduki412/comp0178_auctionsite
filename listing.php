@@ -17,7 +17,9 @@
 
   $title = $row['title'];
   $description = $row['itemDescription'];
-  $current_price = get_max_bid_from($item_id);
+  $bid_max_info = get_max_bid_info_by_auction($item_id)->fetch_assoc();
+  $bid_max_amount = $bid_max_info['bidPrice'];
+  $bid_max_user = $bid_max_info['bidderId'];
   $num_bids = 1;
   $end_time = new DateTime($row['endDate']);
 
@@ -81,7 +83,11 @@
      <!-- TODO: Print the result of the auction here? -->
 <?php else: ?>
      Auction ends <?php echo(date_format($end_time, 'j M H:i') . $time_remaining) ?></p>  
-    <p class="lead">Current bid: £<?php echo(number_format($current_price, 2)) ?></p>
+    <p class="lead">
+      Current bid: £<?php echo(number_format($bid_max_amount, 2)) ?><br>
+      <!-- IMPROVEME:Change displaying user id to username  -->
+      <small>by <a href="userbids.php?user=<?php echo($bid_max_user)?>"><?php echo($bid_max_user) ?></a></small>
+    </p>
 
     <!-- Bidding form -->
     <form method="POST" action="place_bid.php">

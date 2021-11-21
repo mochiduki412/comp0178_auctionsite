@@ -13,7 +13,7 @@
     $price = (int) $_POST['bidPrice'];
 
     // If bid is not higher than the current max bid, refuse.
-    $bid_max = get_max_bid_from($item_id);
+    $bid_max = get_max_bid_price_by_auction($item_id);
     if($price < $bid_max){
         print_msg("Please specify a bid higher than the current bid");
         die();
