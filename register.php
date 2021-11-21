@@ -26,7 +26,6 @@
       <label for="firstName" class="col-sm-2 col-form-label text-right">First Name</label>
       <div class="col-sm-10">
         <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name">
-        <small id="firstNameHelp" class="form-text text-muted"><span class="text-danger">* Required.</span></small>
       </div>
     </div>
 
@@ -35,7 +34,6 @@
       <label for="lastName" class="col-sm-2 col-form-label text-right">Last Name</label>
       <div class="col-sm-10">
         <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name">
-        <small id="lastNameHelp" class="form-text text-muted"><span class="text-danger">* Required.</span></small>
       </div>
     </div>
 
@@ -44,7 +42,9 @@
       <label for="email" class="col-sm-2 col-form-label text-right">Email</label>
       <div class="col-sm-10">
         <input type="text" class="form-control" id="email" name="email" placeholder="Email">
-        <small id="emailHelp" class="form-text text-muted"><span class="text-danger">* Required.</span></small>
+        <small id="emailHelp" class="form-text text-muted">
+          <span class="text-danger">* Required.</span>
+        </small>
       </div>
     </div>
 
@@ -53,7 +53,12 @@
       <label for="password" class="col-sm-2 col-form-label text-right">Password</label>
       <div class="col-sm-10">
         <input type="password" class="form-control" id="password" name='password' placeholder="Password">
-        <small id="passwordHelp" class="form-text text-muted"><span class="text-danger">* Required.</span></small>
+        <small id="passwordHelp" class="form-text text-muted">
+          <span class="text-danger">* Required.</span>
+          <span class="text-danger">
+            Password must have at least 1 uppercase character,1 lowercase character, 1 number and 1 special character (such as @!#).
+          </span>
+        </small>
       </div>
     </div>
 

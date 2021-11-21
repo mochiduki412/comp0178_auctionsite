@@ -32,10 +32,10 @@
     }
 
     /**
-    * @return 23 chars based on sys time.
+    * @return 13 chars based on sys time. Not very reliable but for simplicity now.
     */
     function get_uuid(){
-        return uniqid('', true);
+        return uniqid('', false);
     }
 
     /**

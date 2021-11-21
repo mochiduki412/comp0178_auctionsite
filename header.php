@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="css/custom.css">
     
     <!-- Custom favicon -->
-    <link rel="shortcut icon" href="favicon-32x32.png" type="image/png"/>
+    <link rel="shortcut icon" href="/img/favicon-32x32.png" type="image/png"/>
   <title>Amazawn</title>
 </head>
 
