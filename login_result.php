@@ -1,8 +1,11 @@
+<?php 
+    foreach (glob("includes/*.php") as $filename)
+        require_once($filename);
+?>
+
 <?php
     // TODO: Extract $_POST variables, check they're OK, and attempt to login.
     // Notify user of success/failure and redirect/give navigation options.
-    require_once("db_utils.php");
-
     class UserNotFoundException extends Exception{};
 
     function verify_user($email, $pass){

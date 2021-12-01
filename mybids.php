@@ -1,6 +1,9 @@
 <?php include_once("header.php")?>
 <?php require("utilities.php")?>
-<?php require_once("db_utils.php")?>
+<?php  
+  foreach (glob("includes/*.php") as $filename) {
+    require_once($filename);
+?>
 
 
 <div class="container">

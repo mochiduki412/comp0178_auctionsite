@@ -1,5 +1,8 @@
 <?php include_once('header.php');?>
-<?php require_once('db_utils.php');?>
+<?php 
+    foreach (glob("includes/*.php") as $filename) {
+    require_once($filename);
+};?>
 
 <?php
 // TODO: Extract $_POST variables, check they're OK, and attempt to make a bid.
