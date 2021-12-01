@@ -1,10 +1,12 @@
+<?php 
+    foreach (glob("includes/*.php") as $filename) {
+    require_once($filename);
+};?>
 
 <?php
     // TODO: Extract $_POST variables, check they're OK, and attempt to create
     // an account. Notify user of success/failure and redirect/give navigation 
     // options.
-    require_once("db_utils.php");
-    
     function is_all_fields_set(){
         if(isset($_POST['accountType']) and isset($_POST['email']) and 
         isset($_POST['password']) and isset($_POST['passwordConfirm'])){

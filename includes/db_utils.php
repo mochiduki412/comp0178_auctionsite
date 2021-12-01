@@ -2,11 +2,6 @@
     /*
     * Wenyong: Will refactor after this file gathers some.
     */
-    function printnl($text)
-    {
-        echo nl2br("$text\n");
-    }
-
     // ===== DB connection relateds =====
     $SERVER = "localhost";
     $USER = getenv('DBUSR') ?: "db";

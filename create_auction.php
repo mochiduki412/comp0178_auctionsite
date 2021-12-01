@@ -1,5 +1,8 @@
 <?php include_once("header.php")?>
-<?php require_once("db_utils.php")?>
+<?php  
+  foreach (glob("includes/*.php") as $filename) {
+    require_once($filename);
+}?>
 
 <?php
   // If user is not logged in or not a seller, they should not be able to
