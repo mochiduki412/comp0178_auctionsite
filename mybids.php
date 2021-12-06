@@ -2,7 +2,7 @@
 <?php require("utilities.php")?>
 <?php  
   foreach (glob("includes/*.php") as $filename) {
-    require_once($filename);
+    require_once($filename);}
 ?>
 
 

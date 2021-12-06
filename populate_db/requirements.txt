@@ -1,0 +1,11 @@
+Faker==9.9.0
+faker-vehicle==0.2.0
+greenlet==1.1.2
+importlib-metadata==4.8.2
+PyMySQL==1.0.2
+python-dateutil==2.8.2
+six==1.16.0
+SQLAlchemy==1.4.27
+text-unidecode==1.3
+typing_extensions==4.0.1
+zipp==3.6.0
