@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 23, 2021 at 07:11 PM
+-- Generation Time: Dec 06, 2021 at 12:13 PM
 -- Server version: 5.7.33-0ubuntu0.18.04.1
 -- PHP Version: 7.4.25
 
@@ -35,7 +35,7 @@ CREATE TABLE `Auction` (
   `startingPrice` int(11) UNSIGNED NOT NULL,
   `itemDescription` text NOT NULL,
   `itemCat` varchar(127) NOT NULL,
-  `endDate` datetime NOT NULL,
+  `endDate` date NOT NULL,
   `curBidPrice` int(11) UNSIGNED DEFAULT NULL,
   `curBidderId` varchar(50) DEFAULT NULL,
   `status` tinyint(1) NOT NULL
