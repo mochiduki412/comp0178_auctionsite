@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 06, 2021 at 12:13 PM
+-- Generation Time: Dec 07, 2021 at 10:59 PM
 -- Server version: 5.7.33-0ubuntu0.18.04.1
 -- PHP Version: 7.4.25
 
@@ -36,9 +36,7 @@ CREATE TABLE `Auction` (
   `itemDescription` text NOT NULL,
   `itemCat` varchar(127) NOT NULL,
   `endDate` date NOT NULL,
-  `curBidPrice` int(11) UNSIGNED DEFAULT NULL,
-  `curBidderId` varchar(50) DEFAULT NULL,
-  `status` tinyint(1) NOT NULL
+  `status` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -69,13 +67,28 @@ CREATE TABLE `Buyer` (
 -- --------------------------------------------------------
 
 --
+-- Stand-in structure for view `ExpiredAuctionRewardInfo`
+-- (See below for the actual view)
+--
+CREATE TABLE `ExpiredAuctionRewardInfo` (
+`id` int(11)
+,`auctionId` int(11)
+,`bidderId` varchar(31)
+,`bidPrice` int(11)
+,`endDate` date
+);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `Finished Auction`
 --
 
 CREATE TABLE `Finished Auction` (
   `id` int(11) UNSIGNED NOT NULL,
   `auctionId` int(11) NOT NULL,
-  `winnerId` varchar(30) NOT NULL
+  `winnerId` varchar(30) NOT NULL,
+  `bidPrice` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -93,6 +106,15 @@ CREATE TABLE `User` (
   `type` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Structure for view `ExpiredAuctionRewardInfo`
+--
+DROP TABLE IF EXISTS `ExpiredAuctionRewardInfo`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `ExpiredAuctionRewardInfo`  AS   (select `Bid`.`id` AS `id`,`Auction`.`auctionId` AS `auctionId`,`Bid`.`bidderId` AS `bidderId`,`Bid`.`bidPrice` AS `bidPrice`,`Auction`.`endDate` AS `endDate` from (`Bid` join `Auction` on((`Bid`.`auctionId` = `Auction`.`auctionId`))) where (`Auction`.`endDate` <= curdate()))  ;
+
 --
 -- Indexes for dumped tables
 --
@@ -102,8 +124,7 @@ CREATE TABLE `User` (
 --
 ALTER TABLE `Auction`
   ADD PRIMARY KEY (`auctionId`),
-  ADD KEY `sellerId` (`sellerId`),
-  ADD KEY `fk_curBidderId_User_userId` (`curBidderId`);
+  ADD KEY `sellerId` (`sellerId`);
 
 --
 -- Indexes for table `Bid`
@@ -118,6 +139,7 @@ ALTER TABLE `Bid`
 --
 ALTER TABLE `Finished Auction`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `auctionId` (`auctionId`),
   ADD KEY `fk_FinishedAuction_auctionId_Auction_auctionId` (`auctionId`),
   ADD KEY `fk_FinishedAuction_winnerId_User_userId` (`winnerId`);
 
@@ -159,8 +181,7 @@ ALTER TABLE `Finished Auction`
 -- Constraints for table `Auction`
 --
 ALTER TABLE `Auction`
-  ADD CONSTRAINT `Auction_ibfk_1` FOREIGN KEY (`sellerId`) REFERENCES `User` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_curBidderId_User_userId` FOREIGN KEY (`curBidderId`) REFERENCES `User` (`userId`);
+  ADD CONSTRAINT `Auction_ibfk_1` FOREIGN KEY (`sellerId`) REFERENCES `User` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `Bid`

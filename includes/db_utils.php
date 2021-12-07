@@ -1,14 +1,14 @@
 <?php
     // ===== DB connection relateds =====
-    $SERVER = getenv('SERV') ?: "localhost";
+    $SERV = getenv('SERV') ?: "localhost";
     $USER = getenv('USER') ?: "root";
     $PASS = getenv('PASS') ?: "";
     $DB = getenv('DB') ?: "comp0178db";
 
     function get_conn(){
         // IMRPOVE: Consider pooling
-        global $SERVER, $USER, $PASS, $DB;
-        $conn = new mysqli($SERVER, $USER, $PASS);
+        global $SERV, $USER, $PASS, $DB;
+        $conn = new mysqli($SERV, $USER, $PASS);
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }

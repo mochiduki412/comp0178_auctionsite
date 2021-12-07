@@ -33,4 +33,19 @@
         static $sql = 'UPDATE Auction SET status = ? WHERE auctionId = ?';
         return prepare_bind_excecute($sql, 'ii', $INACTIVE, $auctionId);
     }
+
+    function get_new_expired_auctions(){
+        static $sql = "SELECT * FROM Auction WHERE status = 1 AND endDate <= CURRENT_DATE";
+        return prepare_bind_excecute($sql, '');
+    }
+
+    function get_new_expired_auctions_join_bids(){
+        static $sql = "
+            SELECT * FROM Bid INNER JOIN 
+            (SELECT * FROM Auction WHERE Auction.status = 1 
+            AND Auction.endDate <= CURRENT_DATE) AuctionExpired 
+            ON Bid.auctionId = AuctionExpired.auctionId
+            ";
+        return prepare_bind_excecute($sql, '');
+    }
 ?>

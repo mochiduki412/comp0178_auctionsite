@@ -1,4 +1,9 @@
 <?php
+    $SERV = getenv('SERV') ?: "localhost";
+    $USER = getenv('USER') ?: "root";
+    $PASS = getenv('PASS') ?: "";
+    $DB = getenv('DB') ?: "comp0178db";
+
    function printnl($text)
    {
        echo nl2br("$text\n");
@@ -6,11 +11,12 @@
 
     function connect_db()
     {
+        global $SERV, $USER, $PASS, $DB;
         // Establish connection
-        $connection = mysqli_connect('localhost', 'root', '')
+        $connection = mysqli_connect($SERV, $USER, $PASS)
             or die('Error connecting to MySQL server' . mysqli_error($connection));
         // Select database
-        mysqli_select_db($connection, "comp0178db");
+        mysqli_select_db($connection, $DB);
 
         return $connection;
     }
@@ -18,11 +24,13 @@
     // connect to & query database
     function query_database($query)
     {
+        global $SERV, $USER, $PASS, $DB;
         printnl("Querying Database...");
         // Establish connection
-        $connection = mysqli_connect('localhost', 'root', '')
+        $connection = mysqli_connect($SERV, $USER, $PASS)
             or die('Error connecting to MySQL server' . mysqli_error($connection));
 
+        mysqli_select_db($connection, $DB);
         // Make query
         // Returns mysqli_result object
         $result = mysqli_query($connection, $query)
