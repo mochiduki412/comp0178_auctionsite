@@ -3,7 +3,7 @@
     function get_max_bid_price_by_auction($auctionId){
         static $sql = "SELECT MAX(bidPrice) FROM `Bid` WHERE `auctionId`= ?";
         $res = prepare_bind_excecute($sql, 'i', $auctionId);
-        return $res;
+        return (int) $res->fetch_row()[0];
     }
 
     function get_max_bid_info_by_auction($auctionId){
