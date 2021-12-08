@@ -1,7 +1,8 @@
 <?php
     // ===== DB connection relateds =====
     $SERVER = getenv('SERV') ?: "localhost";
-    $USER = getenv('USER') ?: "root";
+    // $USER = getenv('USER') ?: "root";
+    $USER = 'root';
     $PASS = getenv('PASS') ?: "";
     $DB = getenv('DB') ?: "comp0178db";
 
@@ -25,6 +26,14 @@
         $result = $stmt->get_result();
         $stmt->close();
         $conn->close();
+        return $result;
+    }
+
+    function query_database($sql) {
+        $conn = get_conn();
+        $result = mysqli_query($conn, $sql)
+            or die('Error making query' . mysqli_error($connection));
+        mysqli_close($connection);
         return $result;
     }
 ?>

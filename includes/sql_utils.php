@@ -33,4 +33,9 @@
         static $sql = 'UPDATE Auction SET status = ? WHERE auctionId = ?';
         return prepare_bind_excecute($sql, 'ii', $INACTIVE, $auctionId);
     }
+
+    function get_item_categories(){
+        static $sql = 'SELECT DISTINCT itemCat FROM Auction';
+        return query_database($sql);
+    }
 ?>

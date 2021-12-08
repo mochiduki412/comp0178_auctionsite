@@ -1,9 +1,13 @@
 <?php include_once("header.php")?>
 <?php require("utilities.php")?>
+<?php  
+    foreach (glob("includes/*.php") as $filename) {
+        include_once($filename);
+}?>
 
 <div class="container">
 
-<h3 class="my-3">Browse listings 1</h3>
+<h3 class="my-3">Browse Auctions</h3>
 
 <div id="searchSpecs">
 <!-- When this form is submitted, this PHP page is what processes it.
@@ -20,7 +24,7 @@
               <i class="fa fa-search"></i>
             </span>
           </div>
-          <input type="text" class="form-control border-left-0" id="keyword" placeholder="Search for anything">
+          <input type="text" class="form-control border-left-0" id="keyword" name="keyword" placeholder="Search for anything">
         </div>
       </div>
     </div>
@@ -29,9 +33,12 @@
         <label for="cat" class="sr-only">Search within:</label>
         <select class="form-control" id="cat">
           <option selected value="all">All categories</option>
-          <option value="fill">Fill me in</option>
-          <option value="with">with options</option>
-          <option value="populated">populated from a database?</option>
+          <?php 
+              $item_categories = get_item_categories();
+              while($row = mysqli_fetch_array($item_categories)) {
+                echo ("<option value='{$row['itemCat']}'>{$row['itemCat']}</option>");
+              } 
+          ?>
         </select>
       </div>
     </div>
@@ -56,9 +63,12 @@
 </div>
 
 <?php
+  $keyword;
+
   // Retrieve these from the URL
   if (!isset($_GET['keyword'])) {
     // TODO: Define behavior if a keyword has not been specified.
+    $keyword = '';
   }
   else {
     $keyword = $_GET['keyword'];
@@ -89,6 +99,14 @@
      retrieve data from the database. (If there is no form data entered,
      decide on appropriate default value/default query to make. */
   
+  $find_auctions_query = "
+     SELECT * 
+     FROM Auction
+     WHERE itemName LIKE '%{$keyword}%' OR itemDescription LIKE '%{$keyword}%'
+   ";
+  $found_auctions = query_database($find_auctions_query);
+  // print_h3($find_auctions_query);
+
   /* For the purposes of pagination, it would also be helpful to know the
      total number of results that satisfy the above query */
   $num_results = 96; // TODO: Calculate me for real
@@ -106,25 +124,11 @@
      retrieved from the query -->
 
 <?php
-  // Demonstration of what listings will look like using dummy data.
-  $item_id = "87021";
-  $title = "Dummy title";
-  $description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eget rutrum ipsum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus feugiat, ipsum vel egestas elementum, sem mi vestibulum eros, et facilisis dui nisi eget metus. In non elit felis. Ut lacus sem, pulvinar ultricies pretium sed, viverra ac sapien. Vivamus condimentum aliquam rutrum. Phasellus iaculis faucibus pellentesque. Sed sem urna, maximus vitae cursus id, malesuada nec lectus. Vestibulum scelerisque vulputate elit ut laoreet. Praesent vitae orci sed metus varius posuere sagittis non mi.";
-  $current_price = 30;
-  $num_bids = 1;
-  $end_date = new DateTime('2020-09-16T11:00:00');
-  
-  // This uses a function defined in utilities.php
-  print_listing_li($item_id, $title, $description, $current_price, $num_bids, $end_date);
-  
-  $item_id = "516";
-  $title = "Different title";
-  $description = "Very short description.";
-  $current_price = 13.50;
-  $num_bids = 3;
-  $end_date = new DateTime('2020-11-02T00:00:00');
-  
-  print_listing_li($item_id, $title, $description, $current_price, $num_bids, $end_date);
+  // print like this - print_listing_li($item_id, $title, $description, $current_price, $num_bids, $end_date);
+  // TODO - conform $row contents with print_listing_li arguments and give entire $row array as input
+  while($row = mysqli_fetch_array($found_auctions)) {
+    print_listing_li($row['auctionId'], $row['itemName'], $row['itemDescription'], $row['startingPrice'], 3, $row['endDate']);
+  } 
 ?>
 
 </ul>

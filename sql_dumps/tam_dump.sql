@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 19, 2021 at 01:32 PM
+-- Generation Time: Nov 30, 2021 at 12:13 PM
 -- Server version: 5.7.34
 -- PHP Version: 7.4.21
 
@@ -32,10 +32,28 @@ CREATE TABLE `Auction` (
   `sellerId` int(255) NOT NULL,
   `reservePrice` int(255) NOT NULL,
   `startingPrice` int(255) NOT NULL,
+  `itemName` varchar(1000) NOT NULL,
   `itemDescription` varchar(1000) NOT NULL,
   `itemCat` varchar(500) NOT NULL,
   `endDate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `Auction`
+--
+
+INSERT INTO `Auction` (`auctionId`, `sellerId`, `reservePrice`, `startingPrice`, `itemName`, `itemDescription`, `itemCat`, `endDate`) 
+VALUES (1, 1, 100, 50, 'Apple', 'Delicious apple', 'Fruit', '2021-11-24 17:40:58');
+INSERT INTO `Auction` (`auctionId`, `sellerId`, `reservePrice`, `startingPrice`, `itemName`, `itemDescription`, `itemCat`, `endDate`) 
+VALUES (2, 2, 100, 50, 'Bike', 'Fast bicycle', 'Leisure', '2021-11-24 17:40:58');
+INSERT INTO `Auction` (`auctionId`, `sellerId`, `reservePrice`, `startingPrice`, `itemName`, `itemDescription`, `itemCat`, `endDate`) 
+VALUES (3, 3, 100, 50, 'Car', 'Expensive BMW', 'Vehicle', '2021-11-24 17:40:58');
+INSERT INTO `Auction` (`auctionId`, `sellerId`, `reservePrice`, `startingPrice`, `itemName`, `itemDescription`, `itemCat`, `endDate`) 
+VALUES (4, 4, 100, 50, 'Desktop PC', 'Good Computer', 'Electronics', '2021-11-24 17:40:58');
+INSERT INTO `Auction` (`auctionId`, `sellerId`, `reservePrice`, `startingPrice`, `itemName`, `itemDescription`, `itemCat`, `endDate`) 
+VALUES (5, 5, 100, 50, 'Elephant', 'Wild elephant', 'Animal', '2021-11-24 17:40:58');
+INSERT INTO `Auction` (`auctionId`, `sellerId`, `reservePrice`, `startingPrice`, `itemName`, `itemDescription`, `itemCat`, `endDate`) 
+VALUES (6, 6, 100, 50, 'Feather', 'Pack of 50 feathers', 'Animal', '2021-11-24 17:40:58');
 
 -- --------------------------------------------------------
 
