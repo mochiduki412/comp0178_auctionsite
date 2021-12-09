@@ -24,22 +24,26 @@
               <i class="fa fa-search"></i>
             </span>
           </div>
-          <input type="text" class="form-control border-left-0" id="keyword" name="keyword" placeholder="Search for anything">
+          <!-- Define value here to maintain search query after reload -->
+          <input type="text" class="form-control border-left-0" id="keyword" name="keyword" placeholder="Search for anything" 
+            value="<?php echo $_GET['keyword'] ?: '' ?>"
+          >
         </div>
       </div>
     </div>
     <div class="col-md-3 pr-0">
       <div class="form-group">
         <label for="cat" class="sr-only">Search within:</label>
-        <select class="form-control" id="cat">
-          <option selected value="all">All categories</option>
+        <select class="form-control" id="cat" name="cat">
           <?php 
               $item_categories = get_item_categories();
+              echo ("<option selected value='all'>All categories</option>");
               while($row = mysqli_fetch_array($item_categories)) {
                 echo ("<option value='{$row['itemCat']}'>{$row['itemCat']}</option>");
-              } 
+              }
           ?>
         </select>
+        </script>
       </div>
     </div>
     <div class="col-md-3 pr-0">
@@ -63,24 +67,11 @@
 </div>
 
 <?php
-  $keyword;
-
-  // Retrieve these from the URL
-  if (!isset($_GET['keyword'])) {
-    // TODO: Define behavior if a keyword has not been specified.
-    $keyword = '';
-  }
-  else {
-    $keyword = $_GET['keyword'];
-  }
-
-  if (!isset($_GET['cat'])) {
-    // TODO: Define behavior if a category has not been specified.
-  }
-  else {
-    $category = $_GET['cat'];
-  }
+  // Null coalescing operator - sets to a default value if null or undefined
+  $keyword = $_GET['keyword'] ?? "";
+  $cat = $_GET['cat'] ?? "all";
   
+  // Set orderby
   if (!isset($_GET['order_by'])) {
     // TODO: Define behavior if an order_by value has not been specified.
   }
@@ -88,6 +79,7 @@
     $ordering = $_GET['order_by'];
   }
   
+  // Set page
   if (!isset($_GET['page'])) {
     $curr_page = 1;
   }
@@ -102,8 +94,11 @@
   $find_auctions_query = "
      SELECT * 
      FROM Auction
-     WHERE itemName LIKE '%{$keyword}%' OR itemDescription LIKE '%{$keyword}%'
+     WHERE (itemName LIKE '%{$keyword}%' OR itemDescription LIKE '%{$keyword}%')
    ";
+  if ($cat != 'all') {
+    $find_auctions_query .= " AND itemCat = '{$cat}'";
+  }
   $found_auctions = query_database($find_auctions_query);
   // print_h3($find_auctions_query);
 
@@ -127,7 +122,9 @@
   // print like this - print_listing_li($item_id, $title, $description, $current_price, $num_bids, $end_date);
   // TODO - conform $row contents with print_listing_li arguments and give entire $row array as input
   while($row = mysqli_fetch_array($found_auctions)) {
-    print_listing_li($row['auctionId'], $row['itemName'], $row['itemDescription'], $row['startingPrice'], 3, $row['endDate']);
+    $num_bids = get_num_bid_by_auction($row['auctionId']);
+    $highest_bid = mysqli_fetch_array(get_max_bid_price_by_auction($row['auctionId']))[0];
+    print_listing_li($row['auctionId'], $row['itemName'], $row['itemDescription'], $highest_bid, $num_bids, $row['endDate']);
   } 
 ?>
 
