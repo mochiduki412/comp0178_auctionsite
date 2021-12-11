@@ -76,7 +76,7 @@ def pop_users(cnt = 10):
         try:
             commit_or_rollback(session)
             i += 1
-        except IntegrityError: # happens to generate non-unique name/email etc.
+        except IntegrityError as e: # happens to generate non-unique name/email etc.
             print(str(e))
 
 def pop_auctions(cnt = 20):

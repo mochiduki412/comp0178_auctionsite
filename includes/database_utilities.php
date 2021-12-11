@@ -25,20 +25,14 @@
     function query_database($query)
     {
         global $SERV, $USER, $PASS, $DB;
-        printnl("Querying Database...");
-        // Establish connection
         $connection = mysqli_connect($SERV, $USER, $PASS)
             or die('Error connecting to MySQL server' . mysqli_error($connection));
 
         mysqli_select_db($connection, $DB);
-        // Make query
-        // Returns mysqli_result object
         $result = mysqli_query($connection, $query)
             or die('Error making query' . mysqli_error($connection));
 
-        // end connection
         mysqli_close($connection);
-
         return $result;
     }
 

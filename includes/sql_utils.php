@@ -40,7 +40,8 @@
     }
 
     function get_new_expired_auctions_join_bids(){
-        static $sql = "
+        static $sql = 
+            "
             SELECT * FROM Bid INNER JOIN 
             (SELECT * FROM Auction WHERE Auction.status = 1 
             AND Auction.endDate <= CURRENT_DATE) AuctionExpired 
