@@ -3,3 +3,4 @@ workspace.code*
 test*
 venv
 *.pyc
+.vscode/launch.json
