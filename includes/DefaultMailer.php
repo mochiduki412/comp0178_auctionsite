@@ -36,9 +36,11 @@
             return self::$instance;
         }
 
-        public function send($to_addr, $recipent, $subject = '', $content = '', $debug = false){
-            $this->reset();
+        # the no_action is to prevent spamming the make-up address in reality. Remove it in production !!!
+        public function send($to_addr, $recipent, $subject = '', $content = '', $debug = false, $no_action = True){
+            if($no_action) return;
 
+            $this->reset();
             $mail = $this->mail;
             $mail->SMTPDebug  = $debug;
             $mail->Subject = $subject;
