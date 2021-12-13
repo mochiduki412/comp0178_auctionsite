@@ -7,8 +7,12 @@
     class DefaultMailer {
         private static $instance = null;
 
-        private function __construct($from_addr, $password, $sender)
+        private function __construct()
         {
+            $from_addr = "comp0178@126.com"; 
+            $password = "BUKHWMBCQFOIEIOF";
+            $sender = 'hiyori';
+
             $mail = new PHPMailer();
             $mail->IsSMTP();
             $mail->CharSet = 'UTF-8';
@@ -24,14 +28,10 @@
             $this->mail = $mail;
         }
         
-        public static function get_mailer(
-            $from_addr = "comp0178@126.com", 
-            $password = "BUKHWMBCQFOIEIOF", 
-            $sender = 'hiyori'
-        ){
+        public static function get_mailer(){
             if (self::$instance == null)
             {
-                self::$instance = new DefaultMailer($from_addr, $password, $sender);
+                self::$instance = new DefaultMailer();
             }
             return self::$instance;
         }
