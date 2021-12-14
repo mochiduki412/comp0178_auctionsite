@@ -35,9 +35,11 @@
 
         # The first row, ie. with the highest bid. Verify award, then send notifiactions.
         if($row = $res->fetch_assoc()){ 
+            $cand_name = $row["lastName"];
+            $cand_email = $row["email"];
             if($row and $row["bidPrice"] > $auction["reservePrice"]){ # a bid succeeds, award.
-                $winner_name = $row["lastName"];
-                $winner_email = $row["email"];
+                $cand_name = $row["lastName"];
+                $cand_email = $row["email"];
                 $sql = "INSERT INTO `Finished Auction` 
                         (`auctionId`, `winnerId`, `bidPrice`) 
                         VALUES (?, ?, ?)";
@@ -47,20 +49,26 @@
 
                 $msg  = "Dear seller ". $seller_name . ",\n";
                 $msg .= "Auction " . $auction["title"] . " is ended.\n";
-                $msg .= "Buyer " . $winner_name . " wins with price " . $row["bidPrice"] . "\n";
+                $msg .= "Buyer " . $cand_name . " wins with price " . $row["bidPrice"] . "\n";
                 $mailer->send($seller_email, $seller_name, $subject, $msg);
 
-                $msg  = "Dear buyer ". $winner_name . ",\n";
+                $msg  = "Dear buyer ". $cand_name . ",\n";
                 $msg .= "Auction " . $auction["title"] . " is ended.\n";
                 $msg .= "You wins with price " . $row["bidPrice"] ."\n";
-                $mailer->send($winner_email, $winner_name, $subject, $msg);
-                array_push($informed_users_map, $winner_name);
+                $mailer->send($cand_email, $cand_name, $subject, $msg);
+                array_push($informed_users_map, $cand_name);
 
             }else{ # no bid succeed.
                 $msg  = "Dear seller ". $seller_name . ",\n";
                 $msg .= "Auction " . $auction["title"] . " is ended.\n";
                 $msg .= "No deal is made.\n";
                 $mailer->send($seller_email, $seller_name, $subject, $msg);
+
+                $msg  = "Dear buyer ". $cand_name . ",\n";
+                $msg .= "Auction " . $auction["title"] . " is ended.\n";
+                $msg .= "You failed.\n";
+                $mailer->send($cand_email, $cand_name, $subject, $msg);
+                array_push($informed_users_map, $cand_name);
             }}
 
         # The other row, ie. Other bidders fail, notify.
