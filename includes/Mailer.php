@@ -1,13 +1,13 @@
 <?php  
     use PHPMailer\PHPMailer\PHPMailer;
-    require '../vendor/autoload.php';
+    require  'vendor/autoload.php';
 ?>
 
 <?php
-    class DefaultMailer {
+    class Mailer {
         private static $instance = null;
 
-        private function __construct()
+        private function __construct($develop)
         {
             $from_addr = "comp0178@126.com"; 
             $password = "BUKHWMBCQFOIEIOF";
@@ -16,7 +16,6 @@
             $mail = new PHPMailer();
             $mail->IsSMTP();
             $mail->CharSet = 'UTF-8';
-            
             $mail->Host       = "smtp.126.com";
             $mail->SMTPDebug  = 0;
             $mail->SMTPAuth   = true;
@@ -25,20 +24,24 @@
             $mail->Username   = $from_addr;
             $mail->Password   = $password;
             $mail->setFrom($from_addr, $sender);
+
             $this->mail = $mail;
+            $this->develop = $develop;
         }
         
-        public static function get_mailer(){
+        public static function get_mailer($develop = false){
             if (self::$instance == null)
             {
-                self::$instance = new DefaultMailer();
+                self::$instance = new Mailer($develop = $develop);
             }
             return self::$instance;
         }
 
-        # the no_action is to prevent spamming the make-up address in reality. Remove it in production !!!
-        public function send($to_addr, $recipent, $subject = '', $content = '', $debug = false, $no_action = True){
-            if($no_action) return;
+        public function send($to_addr, $recipent, $subject = '', $content = '', $debug = false){
+            if($this->develop){
+                print $content;
+                return;
+            }
 
             $this->reset();
             $mail = $this->mail;
