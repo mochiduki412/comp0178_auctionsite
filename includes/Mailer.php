@@ -40,6 +40,7 @@
         public function send($to_addr, $recipent, $subject = '', $content = '', $debug = false){
             if($this->develop){
                 print $content;
+                echo "\n";
                 return;
             }
 
