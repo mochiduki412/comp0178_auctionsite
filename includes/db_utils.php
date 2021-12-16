@@ -32,8 +32,8 @@
     function query_database($sql) {
         $conn = get_conn();
         $result = mysqli_query($conn, $sql)
-            or die('Error making query' . mysqli_error($connection));
-        mysqli_close($connection);
+            or die('Error making query' . mysqli_error($conn));
+        mysqli_close($conn);
         return $result;
     }
 ?>
