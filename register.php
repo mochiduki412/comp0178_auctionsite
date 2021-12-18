@@ -1,4 +1,5 @@
 <?php include_once("header.php") ?>
+<?php include_once("includes/page_utils.php") ?>
 
 <div class="container">
   <h2 class="my-3">Register new account</h2>
@@ -53,6 +54,7 @@
       <label for="password" class="col-sm-2 col-form-label text-right">Password</label>
       <div class="col-sm-10">
         <input type="password" class="form-control" id="password" name='password' placeholder="Password">
+        <button type="button" class="m-1" onclick="if (password.type == 'text') password.type = 'password'; else password.type = 'text';">Toggle</button>
         <small id="passwordHelp" class="form-text text-muted">
           <span class="text-danger">* Required.</span>
           <span class="text-danger">
@@ -67,6 +69,7 @@
       <label for="passwordConfirm" class="col-sm-2 col-form-label text-right">Repeat password</label>
       <div class="col-sm-10">
         <input type="password" class="form-control" id="passwordConfirm" name='passwordConfirm' placeholder="Enter password again">
+        <button type="button" class="m-1" onclick="if (passwordConfirm.type == 'text') passwordConfirm.type = 'password'; else passwordConfirm.type = 'text';">Toggle</button>
         <small id="passwordConfirmationHelp" class="form-text text-muted"><span class="text-danger">* Required.</span></small>
       </div>
     </div>

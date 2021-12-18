@@ -32,7 +32,7 @@
     $email = $_POST["email"];
     $pass = $_POST["password"];
     if(!verify_user($email, $pass)){
-        echo('<div class="text-center">Failed to login.</div>');
+        print_h3("Failed to login");
         header("refresh:5;url=index.php");
     } else{
         // query user's information.
@@ -52,6 +52,6 @@
         $_SESSION['user'] = $user_id;
         $_SESSION['account_type'] = $type;
 
-        redirect($_SERVER['HTTP_REFERER'] or 'index.php', 'You are now logged in! You will be redirected shortly', 3);
+        redirect('index.php', 'You are now logged in! You will be redirected shortly', 3);
     }
 ?>
