@@ -54,4 +54,13 @@
         static $sql = 'SELECT DISTINCT itemCat FROM Auction';
         return query_database($sql);
     }
+
+    function get_name_by_user_id($user_id){
+        static $sql = 'SELECT firstName, lastName FROM `User` WHERE User.userId = ?';
+        $res = prepare_bind_excecute($sql, 's', $user_id)->fetch_assoc();
+        $name = $res['firstName'] . ' ' . $res['lastName'];
+        return $name;
+    }
 ?>
+
+    

@@ -13,7 +13,15 @@
   $user_id = $_SESSION['user'];
 
   // TODO: Use item_id to make a query to the database.
-  $sql = "SELECT * FROM `Auction` WHERE `auctionId` = ?";
+  $sql = "SELECT * FROM User 
+          INNER JOIN 
+          (SELECT  itemName, itemDescription, max(bidPrice) as bidPrice, endDate 
+          FROM `Auction` 
+          INNER JOIN Bid
+          WHERE Auction.auctionId = ?
+          GROUP BY Auction.auctionId) as A
+          ";
+
   $results = prepare_bind_excecute($sql, 'i', $item_id);
   if(!$row = $results->fetch_assoc()){
     print_msg('Item not found.');
@@ -22,9 +30,9 @@
 
   $title = $row["itemName"];
   $description = $row['itemDescription'];
-  $bid_max_info = get_max_bid_info_by_auction($item_id)->fetch_assoc();
-  $bid_max_amount = $bid_max_info['bidPrice'];
-  $bid_max_user = $bid_max_info['bidderId'];
+  $bid_max_amount = $row['bidPrice'];
+  $user_max_bid = $row['firstName'] . ' ' . $row['lastName'];
+  $user_id_max_bid = $row['userId'];
   $end_time = new DateTime($row['endDate']);
 
   // TODO: Note: Auctions that have ended may pull a different set of data,
@@ -98,7 +106,7 @@
     <p class="lead">
       Current bid: £<?php echo(number_format($bid_max_amount, 2)) ?><br>
       <!-- IMPROVEME:Change displaying user id to username  -->
-      <small>by <a href="userbids.php?user=<?php echo($bid_max_user)?>"><?php echo($bid_max_user) ?></a></small>
+      <small>by <a href="userbids.php?user=<?php echo($user_id_max_bid)?>"><?php echo($user_max_bid) ?></a></small>
     </p>
 
     <!-- Bidding form -->
