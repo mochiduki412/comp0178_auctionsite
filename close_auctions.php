@@ -48,24 +48,24 @@
                 }
 
                 $msg  = "Dear seller ". $seller_name . ",\n";
-                $msg .= "Auction " . $auction["title"] . " is ended.\n";
+                $msg .= "Auction " . $auction["itemName"] . " is ended.\n";
                 $msg .= "Buyer " . $cand_name . " wins with price " . $row["bidPrice"] . "\n";
                 $mailer->send($seller_email, $seller_name, $subject, $msg);
 
                 $msg  = "Dear buyer ". $cand_name . ",\n";
-                $msg .= "Auction " . $auction["title"] . " is ended.\n";
+                $msg .= "Auction " . $auction["itemName"] . " is ended.\n";
                 $msg .= "You wins with price " . $row["bidPrice"] ."\n";
                 $mailer->send($cand_email, $cand_name, $subject, $msg);
                 array_push($informed_users_map, $cand_name);
 
             }else{ # no bid succeed.
                 $msg  = "Dear seller ". $seller_name . ",\n";
-                $msg .= "Auction " . $auction["title"] . " is ended.\n";
+                $msg .= "Auction " . $auction["itemName"] . " is ended.\n";
                 $msg .= "No deal is made.\n";
                 $mailer->send($seller_email, $seller_name, $subject, $msg);
 
                 $msg  = "Dear buyer ". $cand_name . ",\n";
-                $msg .= "Auction " . $auction["title"] . " is ended.\n";
+                $msg .= "Auction " . $auction["itemName"] . " is ended.\n";
                 $msg .= "You failed.\n";
                 $mailer->send($cand_email, $cand_name, $subject, $msg);
                 array_push($informed_users_map, $cand_name);
@@ -79,7 +79,7 @@
                 continue;
             }
             $msg  = "Dear buyer ". $bidder_name . ",\n";
-            $msg .= "Auction " . $auction["title"] . " is ended.\n";
+            $msg .= "Auction " . $auction["itemName"] . " is ended.\n";
             $msg .= "You failed.\n";
             $mailer->send($seller_email, $seller_name, $subject, $msg);
             array_push($informed_users_map, $bidder_name);

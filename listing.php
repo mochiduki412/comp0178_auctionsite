@@ -18,7 +18,7 @@
     die();
   }
 
-  $title = $row['title'];
+  $title = $row["itemName"];
   $description = $row['itemDescription'];
   $bid_max_info = get_max_bid_info_by_auction($item_id)->fetch_assoc();
   $bid_max_amount = $bid_max_info['bidPrice'];

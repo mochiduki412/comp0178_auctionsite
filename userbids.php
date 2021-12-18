@@ -30,7 +30,7 @@
   while($row = $results->fetch_assoc()){
     print_listing_li(
       $row['auctionId'], 
-      $row['title'],
+      $row["itemName"],
       $row['itemDescription'],
       $row['bidPrice'],
       get_num_bid_by_auction($row['auctionId']),

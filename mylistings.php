@@ -24,18 +24,22 @@
   if(!is_login()) redirect('browse.php', 'You are not logged in.');
   
   // logged in
-  $sql = "SELECT * FROM `Auction` WHERE `sellerId` = ?";
+  $sql = "SELECT Auction.auctionId, itemName, itemDescription, max(bidPrice) as maxBid, COUNT(bidPrice) as cnt, endDate 
+          FROM `Auction` 
+          INNER JOIN `Bid` 
+          ON Bid.auctionId = Auction.auctionId
+          WHERE sellerId = ?
+          GROUP BY auctionId
+          ";
+
   $results = prepare_bind_excecute($sql, 's', $_SESSION['user']);
   while($row = $results->fetch_assoc()){
-    // Buggy! We need to change our ER design to:
-    // TODO 1: Record the number of bids (I presume the bid history).
-    // TODO 2: Record the current bid price.
     print_listing_li(
       $row['auctionId'], 
-      $row['title'],
+      $row["itemName"],
       $row['itemDescription'],
-      $row['bidPrice'],
-      get_num_bid_by_auction($row['auctionId']),
+      $row['maxBid'],
+      $row['cnt'],
       new DateTime($row['endDate'])
     );
   }

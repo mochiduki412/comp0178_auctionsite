@@ -1,11 +1,11 @@
 <?php
     // ===== DB connection relateds =====
     $SERV = getenv('SERV') ?: "localhost";
-    $USER = getenv('USER') ?: "root";
-    // $USER = 'root';
+    // $USER = getenv('USER') ?: "root";
+    $USER = 'root';
     $PASS = getenv('PASS') ?: "";
     $DB = getenv('DB') ?: "comp0178db";
-
+   
     function get_conn(){
         // IMRPOVE: Consider pooling
         global $SERV, $USER, $PASS, $DB;
