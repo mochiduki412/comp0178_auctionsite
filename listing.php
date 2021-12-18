@@ -7,8 +7,10 @@
 
 
 <?php
+  session_start();
   // Get info from the URL:
   $item_id = $_GET['item_id'];
+  $user_id = $_SESSION['user'];
 
   // TODO: Use item_id to make a query to the database.
   $sql = "SELECT * FROM `Auction` WHERE `auctionId` = ?";
@@ -40,8 +42,16 @@
   // TODO: If the user has a session, use it to make a query to the database
   //       to determine if the user is already watching this item.
   //       For now, this is hardcoded.
-  $has_session = true;
+  $has_session = false;
   $watching = false;
+  if(is_login()){
+    $has_session = true;
+    $sql = "SELECT * FROM `watchlist` WHERE userId = ? AND auctionId = ?";
+    $res = prepare_bind_excecute($sql, 'si', $user_id, $item_id)->fetch_assoc();
+    if($res){
+      $watching = true;
+    }
+  }
 ?>
 
 
@@ -55,7 +65,7 @@
 <?php
   /* The following watchlist functionality uses JavaScript, but could
      just as easily use PHP as in other places in the code */
-  if ($now < $end_time):
+  if ($now < $end_time and is_login()):
 ?>
     <div id="watch_nowatch" <?php if ($has_session && $watching) echo('style="display: none"');?> >
       <button type="button" class="btn btn-outline-secondary btn-sm" onclick="addToWatchlist()">+ Add to watchlist</button>
@@ -133,10 +143,12 @@ function addToWatchlist(button) {
         var objT = obj.trim();
  
         if (objT == "success") {
+          console.log("sql success");
           $("#watch_nowatch").hide();
           $("#watch_watching").show();
         }
         else {
+          console.log(objT);
           var mydiv = document.getElementById("watch_nowatch");
           mydiv.appendChild(document.createElement("br"));
           mydiv.appendChild(document.createTextNode("Add to watch failed. Try again later."));
