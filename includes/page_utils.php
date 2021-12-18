@@ -4,6 +4,14 @@
         echo(sprintf('<div class="text-center">%s</div>', $msg));
     }
 
+    function print_h3($msg){
+        echo('<h3 class="text-center">' . $msg . '</h3>');
+    }
+
+    function alert($text) {
+        echo('<script type="text/javascript">alert("' . $text . '")</script>');
+    }
+
     function redirect($url = "index.php", $msg = '', $after_seconds = 3){
         print_msg($msg);
         echo(sprintf("<script>alert(%s);</script>", $msg));

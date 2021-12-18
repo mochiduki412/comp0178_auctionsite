@@ -4,3 +4,9 @@ test*
 venv
 *.pyc
 .vscode/launch.json
+
+# Python virtual env files
+pyvenv.cfg
+bin
+lib
+greenlet.h

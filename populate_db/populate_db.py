@@ -15,7 +15,9 @@ from faker_vehicle import VehicleProvider
 # setup sqlalchemy
 DB, SERV = getenv('DB') or "comp0178db", getenv('SERV') or "localhost"
 USER, PASS = getenv('USER') or "root", getenv('PASS') or ""
-engine = create_engine(f'mysql+pymysql://{USER}:{PASS}@{SERV}/{DB}', echo = False)
+connection_url = f'mysql+pymysql://{USER}:{PASS}@{SERV}/{DB}'
+# NOTE - use this in case unable to connect to SQL server 'mysql+pymysql://root@localhost:8888/comp0178db'
+engine = create_engine(connection_url, echo = False)
 metadata = MetaData()
 session = Session(engine)
 
