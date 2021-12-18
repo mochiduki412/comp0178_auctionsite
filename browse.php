@@ -161,9 +161,7 @@
 <?php
   // print like this - print_listing_li($item_id, $title, $description, $current_price, $num_bids, $end_date);
   while($row = mysqli_fetch_array($found_auctions)) {
-    $num_bids = get_num_bid_by_auction($row['auctionId']);
-    $highest_bid = mysqli_fetch_array(get_max_bid_price_by_auction($row['auctionId']))[0];
-    print_listing_li($row['auctionId'], $row['itemName'], $row['itemDescription'], $highest_bid, $num_bids, $row['endDate']);
+    print_listing_li($row['auctionId'], $row['itemName'], $row['itemDescription'], $row['maxBidPrice'], $row['numBids'], $row['endDate']);
   } 
 ?>
 </ul>
