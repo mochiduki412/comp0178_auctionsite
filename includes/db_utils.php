@@ -1,8 +1,8 @@
 <?php
     // ===== DB connection relateds =====
     $SERVER = getenv('SERV') ?: "localhost";
-    // $USER = getenv('USER') ?: "root";
-    $USER = 'root';
+    $USER = getenv('USER') ?: "root";
+    // $USER = 'root';
     $PASS = getenv('PASS') ?: "";
     $DB = getenv('DB') ?: "comp0178db";
 

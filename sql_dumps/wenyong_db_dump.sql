@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 09, 2021 at 08:04 PM
+-- Generation Time: Dec 18, 2021 at 10:45 PM
 -- Server version: 5.7.33-0ubuntu0.18.04.1
 -- PHP Version: 7.4.25
 
@@ -163,6 +163,17 @@ CREATE TABLE `Finished Auction` (
   `bidPrice` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `Finished Auction`
+--
+
+INSERT INTO `Finished Auction` (`id`, `auctionId`, `winnerId`, `bidPrice`) VALUES
+(1, 193, '61a3a4aba0c3a', 453),
+(2, 200, '61a751bc08292', 499),
+(3, 204, '61a7506728d11', 485),
+(4, 210, '61a7506728d11', 358),
+(5, 212, '61a3a4aba0c3a', 324);
+
 -- --------------------------------------------------------
 
 --
@@ -186,8 +197,10 @@ INSERT INTO `User` (`userId`, `firstName`, `lastName`, `email`, `password`, `typ
 ('61a3a4aba0c3a', 'hiyori', 'hayasaka', 'hayasakahiyori@gmail.com', '$2y$10$CiIlhR2UdIc7ZFbaORaQweV8f/XMRNqpbIEN15qjMq7QTALUCD7z.', 'buyer'),
 ('61a3a4ea1a3b3', 'yuki', 'katase', 'kataseyuki@gmail.com', '$2y$10$NCYix4A2B2z1UMUQtG7IGeA8r8OlaqRhnQ9yMDEBo1kBW3aDJe5Sm', 'seller'),
 ('61a3a51e58f52', 'satuki', 'shindou', 'shindousatuki@gmail.com', '$2y$10$b4gzX/ICpZgsWvcGPuKGj.TZ20.1bpebc11RbIGsg7jmgBbOPMnWy', 'buyer'),
-('61a7506728d11', 'kaede', '', 'kaede@gmail.com', '$2y$10$xzZvPJvh9/WpmGUA3M5HvuhXoeUVKtqgG9XBbaa4HUc1uNtcpjZeG', 'buyer'),
-('61a751bc08292', 'hello', 'world', 'test@gmail.com', '$2y$10$T2rwzYyEvZjCmmsTqCe5X.nhPOr94aoUjkQmgad7lATek0TmNNYye', 'buyer');
+('61a7506728d11', 'kaede', 'fuuyou', 'kaede@gmail.com', '$2y$10$xzZvPJvh9/WpmGUA3M5HvuhXoeUVKtqgG9XBbaa4HUc1uNtcpjZeG', 'buyer'),
+('61a751bc08292', 'hello', 'world', 'test@gmail.com', '$2y$10$T2rwzYyEvZjCmmsTqCe5X.nhPOr94aoUjkQmgad7lATek0TmNNYye', 'buyer'),
+('61bdf2ba53530', 'asd', 'sad', 'shindousatukikk@gmail.com', '$2y$10$ku4iG.pBM.wso2Q2p69EMOIgA99yiM8NAAxBdA8YOAbByAE.pkcpG', 'buyer'),
+('61bdf35670f49', 'aa', 'ss', 'as@gmail.com', '$2y$10$GmUymsjSWOmI4Dz1WEG8NOgSV2wK/YOjjAQ8sm0LNQoQ8IJdHwlR2', 'buyer');
 
 -- --------------------------------------------------------
 
@@ -254,7 +267,7 @@ ALTER TABLE `Bid`
 -- AUTO_INCREMENT for table `Finished Auction`
 --
 ALTER TABLE `Finished Auction`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
