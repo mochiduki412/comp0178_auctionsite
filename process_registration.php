@@ -86,13 +86,14 @@
     $uuid = get_uuid();
     $pass_hashed = hash_pass($pass);
     $sql = 'INSERT INTO `User` (`userId`, `firstname`, `lastname`, `email`, `password`, `type`) VALUES (?, ?, ?, ?, ?, ?);';
-    try{
+    try {
         prepare_bind_excecute($sql, "ssssss", $uuid, $fname, $lname, $email, $pass_hashed, $type);
-    } catch(Exception){
+    } catch (Exception $e) {
         error_log($e);
         print_msg("Internal error, please try later.");
         die();
     }
     
-    redirect('index.php', 'Account created');
+    alert("Account successfully created");
+    redirect('index.php', 'Redirecting to main page...');
 ?>
