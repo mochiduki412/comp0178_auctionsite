@@ -13,14 +13,7 @@
   $user_id = $_SESSION['user'];
 
   // TODO: Use item_id to make a query to the database.
-  $sql = "SELECT * FROM User 
-          INNER JOIN 
-          (SELECT  itemName, itemDescription, max(bidPrice) as bidPrice, endDate 
-          FROM `Auction` 
-          INNER JOIN Bid
-          WHERE Auction.auctionId = ?
-          GROUP BY Auction.auctionId) as A
-          ";
+  $sql = "SELECT * FROM `Auction` WHERE `auctionId` = ?";
 
   $results = prepare_bind_excecute($sql, 'i', $item_id);
   if(!$row = $results->fetch_assoc()){
@@ -30,8 +23,18 @@
 
   $title = $row["itemName"];
   $description = $row['itemDescription'];
-  $bid_max_amount = $row['bidPrice'];
-  $user_max_bid = $row['firstName'] . ' ' . $row['lastName'];
+  $sql = "SELECT * FROM
+            (SELECT * FROM `Bid` WHERE bidPrice = 
+            (SELECT MAX(bidPrice) 
+            FROM Bid 
+            WHERE auctionId = ?)) A
+          INNER JOIN User
+          on A.bidderId = User.userId";
+  $bid_max_info = prepare_bind_excecute($sql, 'i', $item_id)->fetch_assoc();
+
+  // $bid_max_info = get_max_bid_info_by_auction($item_id)->fetch_assoc();
+  $bid_max_amount = $bid_max_info['bidPrice'];
+  $user_max_bid = $bid_max_info['firstName'] . ' ' . $bid_max_info['lastName'];
   $user_id_max_bid = $row['userId'];
   $end_time = new DateTime($row['endDate']);
 

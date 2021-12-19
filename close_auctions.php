@@ -6,7 +6,7 @@
 <?php
     # Use email to notify user now, but can also impl using front-end.
     $DEBUG = true;
-    $mailer = Mailer::get_mailer($develop = $DEBUG);
+    $mailer = Mailer::get_mailer($develop = true);
     $subject = "Auction expiration";
 
     # select expired auction join seller info

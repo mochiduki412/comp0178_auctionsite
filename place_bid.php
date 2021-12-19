@@ -10,8 +10,7 @@
     $INACTIVE = 0;
     $ACTIVE = 1;
 
-    // TODO: Guard against POST request later!
-    $item_id = $_POST['itemId']; // We do not distinguish item and auction in DB for now.
+    $item_id = $_POST['itemId'];
     $url_back = 'listing.php?item_id=' . $item_id;
     if(!is_login()) redirect($url_back, 'You are not logged in.');
 
@@ -20,7 +19,7 @@
 
     $sql = "SELECT * FROM Auction WHERE auctionId = ?";
     $res = prepare_bind_excecute($sql, 's', $item_id);
-    if($res === null)redirect($url_back, "Auction does not exist.");
+    if($res === null) redirect($url_back, "Auction does not exist.");
     $row = $res->fetch_assoc();
 
     // validate auction status
@@ -31,11 +30,14 @@
     }
     
     // If bid is not higher than the current bid, refuse.
-    if((int) $price <= get_max_bid_price_by_auction($item_id)){
+    $bid_info = get_max_bid_info_by_auction($item_id)->fetch_assoc();
+    if((int) $price <= $bid_info['bidPrice']){
         redirect($url_back, "Please specify a bid higher than the current bid");
     }
 
-    // OK, place bid and update Auction accordingly
+    // OK, place bid, update new max bidder and email replaced max bidder.
+    
+
     $sql = "INSERT INTO `Bid` (`auctionId`, `bidderId`, `bidPrice`) VALUES (?, ?, ?);";
     try{
         prepare_bind_excecute($sql, 'isi', $item_id, $user_id, $price);
@@ -43,7 +45,22 @@
         redirect($url_back, 'Failed to place bid, please try again later.');
     }
 
+    
+    $username = get_name_by_user_id($user_id);
+    $sql = "SELECT * FROM User WHERE userId = ?";
+    $out_bidder_info = prepare_bind_excecute($sql, 's', $bid_info['bidderId'])->fetch_assoc();
+    $out_bidder_name = $out_bidder_info['firstName'] . ' ' . $out_bidder_info['lastName'];
+    
     print_msg("Create bid successfully! <a href='mybids.php'>View my bids</a>.");
+
+    if( $username == $out_bidder_name) return; # do not inform myself
+    $subject = "You have been out bidded";
+    $msg  = "Dear user ". $out_bidder_name . ",\n";
+    $msg .= "You have been out bidded by £ " . $price . " from " 
+    . $username . " on auction " . $item_id;
+    $mailer = Mailer::get_mailer($develop = $DEBUG);
+    $mailer->send($out_bidder_info['email'], $out_bidder_name, $subject, $msg);
+
 ?>
 
 <?php include_once('footer.php');?>
