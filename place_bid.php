@@ -35,9 +35,7 @@
         redirect($url_back, "Please specify a bid higher than the current bid");
     }
 
-    // OK, place bid, update new max bidder and email replaced max bidder.
-    
-
+    // OK, place bid, update new max bidder and email.
     $sql = "INSERT INTO `Bid` (`auctionId`, `bidderId`, `bidPrice`) VALUES (?, ?, ?);";
     try{
         prepare_bind_excecute($sql, 'isi', $item_id, $user_id, $price);
@@ -45,22 +43,35 @@
         redirect($url_back, 'Failed to place bid, please try again later.');
     }
 
-    
     $username = get_name_by_user_id($user_id);
     $sql = "SELECT * FROM User WHERE userId = ?";
     $out_bidder_info = prepare_bind_excecute($sql, 's', $bid_info['bidderId'])->fetch_assoc();
     $out_bidder_name = $out_bidder_info['firstName'] . ' ' . $out_bidder_info['lastName'];
-    
     print_msg("Create bid successfully! <a href='mybids.php'>View my bids</a>.");
 
+    # inform out bidder
     if( $username == $out_bidder_name) return; # do not inform myself
     $subject = "You have been out bidded";
     $msg  = "Dear user ". $out_bidder_name . ",\n";
     $msg .= "You have been out bidded by £ " . $price . " from " 
     . $username . " on auction " . $item_id;
-    $mailer = Mailer::get_mailer($develop = $DEBUG);
+    $mailer = Mailer::get_mailer($develop = true);
     $mailer->send($out_bidder_info['email'], $out_bidder_name, $subject, $msg);
 
+    # inform watchlist watcher
+    $sql = "SELECT userId FROM `watchlist` WHERE auctionId = ?";
+    $watchers = prepare_bind_excecute($sql, 'i', $item_id);
+    while($watcher = $watchers->fetch_assoc()){
+        $subject = "Your watched auction has status change";
+        $watcher_name = $out_bidder_info['firstName'] . ' ' . $out_bidder_info['lastName'];
+        $msg  = "Dear user ". $watcher_name . ",\n";
+        $msg .= "You have been out bidded by £ " . $price . " from " 
+        . $username . " on auction " . $item_id;
+        $mailer = Mailer::get_mailer($develop = true);
+        $mailer->send($watcher['email'], $watcher_name, $subject, $msg);
+    }
+
+    // print_msg("Create bid successfully! <a href='mybids.php'>View my bids</a>.");
 ?>
 
 <?php include_once('footer.php');?>
