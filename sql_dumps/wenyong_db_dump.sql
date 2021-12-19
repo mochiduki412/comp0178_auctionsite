@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 07, 2021 at 10:59 PM
+-- Generation Time: Dec 19, 2021 at 11:32 AM
 -- Server version: 5.7.33-0ubuntu0.18.04.1
 -- PHP Version: 7.4.25
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `databasecw`
+-- Database: `dbcw_latest`
 --
 
 -- --------------------------------------------------------
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `Auction` (
   `auctionId` int(11) NOT NULL,
   `sellerId` varchar(255) DEFAULT NULL,
-  `title` varchar(255) NOT NULL,
+  `itemName` varchar(255) NOT NULL,
   `reservePrice` int(11) UNSIGNED NOT NULL,
   `startingPrice` int(11) UNSIGNED NOT NULL,
   `itemDescription` text NOT NULL,
@@ -43,23 +43,23 @@ CREATE TABLE `Auction` (
 -- Dumping data for table `Auction`
 --
 
-INSERT INTO `Auction` (`auctionId`, `sellerId`, `title`, `reservePrice`, `startingPrice`, `itemDescription`, `itemCat`, `endDate`, `status`) VALUES
-(193, '61a751bc08292', 'fake_Honda', 201, 17, 'Hot near reason day west.', 'Convertible, Coupe', '2021-03-24', 1),
+INSERT INTO `Auction` (`auctionId`, `sellerId`, `itemName`, `reservePrice`, `startingPrice`, `itemDescription`, `itemCat`, `endDate`, `status`) VALUES
+(193, '61a751bc08292', 'fake_Honda', 201, 17, 'Hot near reason day west.', 'Coupe', '2021-03-24', 1),
 (194, '61a3a51e58f52', 'fake_Mercury', 392, 18, 'Act military when.', 'SUV', '2022-11-07', 1),
 (195, '61a3a4aba0c3a', 'fake_Nissan', 245, 81, 'Else physical order.', 'Pickup', '2022-11-09', 1),
-(196, '61a751bc08292', 'fake_Ford', 376, 35, 'Material right think single leader happy both.', 'Van/Minivan', '2022-05-17', 1),
+(196, '61a751bc08292', 'fake_Ford', 376, 35, 'Material right think single leader happy both.', 'Van', '2022-05-17', 1),
 (197, '61a7506728d11', 'fake_Nissan', 340, 31, 'Public before contain structure.', 'SUV', '2022-09-28', 1),
 (198, '61a7506728d11', 'fake_Plymouth', 332, 91, 'News green guess per their mention least quickly.', 'SUV', '2021-07-25', 1),
 (199, '61a3a4aba0c3a', 'fake_GMC', 312, 30, 'Network stuff discover.', 'Pickup', '2021-05-02', 1),
 (200, '61a7506728d11', 'fake_Chevrolet', 310, 50, 'Bed care drug. Quickly hold manager chair this.', 'Sedan', '2021-09-09', 1),
 (201, '61a3a4aba0c3a', 'fake_Hyundai', 310, 66, 'How social suggest. Others keep hold off show in.', 'Coupe', '2022-06-14', 1),
-(202, '61a7506728d11', 'fake_Chevrolet', 279, 97, 'Then season vote I organization young white.', 'Coupe, Convertible', '2022-08-23', 1),
+(202, '61a7506728d11', 'fake_Chevrolet', 279, 97, 'Then season vote I organization young white.', 'Convertible', '2022-08-23', 1),
 (203, '61a3a4aba0c3a', 'fake_Mercury', 287, 81, 'Unit another however hair.', 'Sedan', '2022-03-27', 1),
 (204, '61a7506728d11', 'fake_Oldsmobile', 286, 63, 'Effect war pretty time agree lot form.', 'SUV', '2021-09-03', 1),
 (205, '61a751bc08292', 'fake_Chevrolet', 327, 96, 'Trade wear line.', 'Sedan', '2021-07-09', 1),
 (206, '61a3a51e58f52', 'fake_GMC', 270, 63, 'Bar community produce coach wear action.', 'Wagon', '2021-05-14', 1),
 (207, '61a3a4aba0c3a', 'fake_Subaru', 338, 100, 'Everybody whole behavior similar defense.', 'Sedan', '2021-07-31', 1),
-(208, '61a3a4aba0c3a', 'fake_Buick', 254, 94, 'Fund bed create body know ok strong.', 'Sedan, Hatchback', '2022-02-10', 1),
+(208, '61a3a4aba0c3a', 'fake_Buick', 254, 94, 'Fund bed create body know ok strong.', 'Hatchback', '2022-02-10', 1),
 (209, '61a751bc08292', 'fake_Cadillac', 264, 23, 'Reach affect available industry.', 'Pickup', '2022-04-29', 1),
 (210, '61a7506728d11', 'fake_Dodge', 302, 100, 'Worry positive return material.', 'SUV', '2021-11-23', 1),
 (211, '61a3a4aba0c3a', 'fake_Volkswagen', 371, 100, 'Green across reflect foreign prove country.', 'Sedan', '2021-07-23', 1),
@@ -123,7 +123,20 @@ INSERT INTO `Bid` (`id`, `auctionId`, `bidderId`, `bidPrice`, `createdDate`) VAL
 (261, 201, '61a3a4aba0c3a', 433, '2021-12-09 12:02:17'),
 (262, 209, '61a7506728d11', 229, '2021-12-09 12:02:17'),
 (263, 194, '61a3a51e58f52', 387, '2021-12-09 12:02:17'),
-(264, 204, '61a7506728d11', 432, '2021-12-09 12:02:17');
+(264, 204, '61a7506728d11', 432, '2021-12-09 12:02:17'),
+(265, 209, '61a3a4aba0c3a', 500, '2021-12-18 21:37:38'),
+(266, 208, '61a3a4aba0c3a', 510, '2021-12-19 00:10:56'),
+(267, 208, '61a3a4aba0c3a', 520, '2021-12-19 00:15:04'),
+(268, 209, '61a3a4aba0c3a', 510, '2021-12-19 02:54:25'),
+(269, 209, '61a3a4ea1a3b3', 520, '2021-12-19 02:55:00'),
+(270, 209, '61a3a4ea1a3b3', 530, '2021-12-19 02:55:25'),
+(271, 208, '61a3a4ea1a3b3', 540, '2021-12-19 02:55:45'),
+(272, 208, '61a3a4ea1a3b3', 550, '2021-12-19 03:20:22'),
+(273, 208, '61a3a4ea1a3b3', 560, '2021-12-19 03:21:23'),
+(274, 209, '61a3a4ea1a3b3', 550, '2021-12-19 03:27:56'),
+(275, 209, '61a3a4ea1a3b3', 560, '2021-12-19 03:28:28'),
+(276, 209, '61a3a4ea1a3b3', 570, '2021-12-19 03:29:58'),
+(277, 209, '61a3a4ea1a3b3', 580, '2021-12-19 03:30:21');
 
 -- --------------------------------------------------------
 
@@ -163,16 +176,15 @@ CREATE TABLE `Finished Auction` (
   `bidPrice` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `Finished Auction`
---
+-- --------------------------------------------------------
 
-INSERT INTO `Finished Auction` (`id`, `auctionId`, `winnerId`, `bidPrice`) VALUES
-(1, 193, '61a3a4aba0c3a', 453),
-(2, 200, '61a751bc08292', 499),
-(3, 204, '61a7506728d11', 485),
-(4, 210, '61a7506728d11', 358),
-(5, 212, '61a3a4aba0c3a', 324);
+--
+-- Stand-in structure for view `my_auctions`
+-- (See below for the actual view)
+--
+CREATE TABLE `my_auctions` (
+`auctionId` int(11)
+);
 
 -- --------------------------------------------------------
 
@@ -189,15 +201,6 @@ CREATE TABLE `User` (
   `type` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Structure for view `ExpiredAuctionRewardInfo`
---
-DROP TABLE IF EXISTS `ExpiredAuctionRewardInfo`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `ExpiredAuctionRewardInfo`  AS   (select `Bid`.`id` AS `id`,`Auction`.`auctionId` AS `auctionId`,`Bid`.`bidderId` AS `bidderId`,`Bid`.`bidPrice` AS `bidPrice`,`Auction`.`endDate` AS `endDate` from (`Bid` join `Auction` on((`Bid`.`auctionId` = `Auction`.`auctionId`))) where (`Auction`.`endDate` <= curdate()))  ;
-
 --
 -- Dumping data for table `User`
 --
@@ -206,10 +209,20 @@ INSERT INTO `User` (`userId`, `firstName`, `lastName`, `email`, `password`, `typ
 ('61a3a4aba0c3a', 'hiyori', 'hayasaka', 'hayasakahiyori@gmail.com', '$2y$10$CiIlhR2UdIc7ZFbaORaQweV8f/XMRNqpbIEN15qjMq7QTALUCD7z.', 'buyer'),
 ('61a3a4ea1a3b3', 'yuki', 'katase', 'kataseyuki@gmail.com', '$2y$10$NCYix4A2B2z1UMUQtG7IGeA8r8OlaqRhnQ9yMDEBo1kBW3aDJe5Sm', 'seller'),
 ('61a3a51e58f52', 'satuki', 'shindou', 'shindousatuki@gmail.com', '$2y$10$b4gzX/ICpZgsWvcGPuKGj.TZ20.1bpebc11RbIGsg7jmgBbOPMnWy', 'buyer'),
-('61a7506728d11', 'kaede', 'fuuyou', 'kaede@gmail.com', '$2y$10$xzZvPJvh9/WpmGUA3M5HvuhXoeUVKtqgG9XBbaa4HUc1uNtcpjZeG', 'buyer'),
-('61a751bc08292', 'hello', 'world', 'test@gmail.com', '$2y$10$T2rwzYyEvZjCmmsTqCe5X.nhPOr94aoUjkQmgad7lATek0TmNNYye', 'buyer'),
-('61bdf2ba53530', 'asd', 'sad', 'shindousatukikk@gmail.com', '$2y$10$ku4iG.pBM.wso2Q2p69EMOIgA99yiM8NAAxBdA8YOAbByAE.pkcpG', 'buyer'),
-('61bdf35670f49', 'aa', 'ss', 'as@gmail.com', '$2y$10$GmUymsjSWOmI4Dz1WEG8NOgSV2wK/YOjjAQ8sm0LNQoQ8IJdHwlR2', 'buyer');
+('61a7506728d11', 'kaede', '', 'kaede@gmail.com', '$2y$10$xzZvPJvh9/WpmGUA3M5HvuhXoeUVKtqgG9XBbaa4HUc1uNtcpjZeG', 'buyer'),
+('61a751bc08292', 'hello', 'world', 'test@gmail.com', '$2y$10$T2rwzYyEvZjCmmsTqCe5X.nhPOr94aoUjkQmgad7lATek0TmNNYye', 'buyer');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `watchlist`
+--
+
+CREATE TABLE `watchlist` (
+  `id` int(11) NOT NULL,
+  `userId` varchar(50) NOT NULL,
+  `auctionId` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -219,6 +232,15 @@ INSERT INTO `User` (`userId`, `firstName`, `lastName`, `email`, `password`, `typ
 DROP TABLE IF EXISTS `ExpiredAuctionRewardInfo`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `ExpiredAuctionRewardInfo`  AS   (select `Bid`.`id` AS `id`,`Auction`.`auctionId` AS `auctionId`,`Bid`.`bidderId` AS `bidderId`,`Bid`.`bidPrice` AS `bidPrice`,`Auction`.`endDate` AS `endDate` from (`Bid` join `Auction` on((`Bid`.`auctionId` = `Auction`.`auctionId`))) where (`Auction`.`endDate` <= curdate()))  ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `my_auctions`
+--
+DROP TABLE IF EXISTS `my_auctions`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `my_auctions`  AS SELECT `A`.`auctionId` AS `auctionId` FROM (`Bid` `B` join `Auction` `A`) WHERE ((`B`.`auctionId` = `A`.`auctionId`) AND (`B`.`bidderId` = '')) ;
 
 --
 -- Indexes for dumped tables
@@ -257,6 +279,15 @@ ALTER TABLE `User`
   ADD UNIQUE KEY `userId` (`userId`);
 
 --
+-- Indexes for table `watchlist`
+--
+ALTER TABLE `watchlist`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `userId` (`userId`,`auctionId`),
+  ADD UNIQUE KEY `userId_2` (`userId`,`auctionId`),
+  ADD KEY `auctionId_Auction_auctionId` (`auctionId`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -270,13 +301,19 @@ ALTER TABLE `Auction`
 -- AUTO_INCREMENT for table `Bid`
 --
 ALTER TABLE `Bid`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=265;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=278;
 
 --
 -- AUTO_INCREMENT for table `Finished Auction`
 --
 ALTER TABLE `Finished Auction`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `watchlist`
+--
+ALTER TABLE `watchlist`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- Constraints for dumped tables
@@ -301,6 +338,13 @@ ALTER TABLE `Bid`
 ALTER TABLE `Finished Auction`
   ADD CONSTRAINT `fk_FinishedAuction_auctionId_Auction_auctionId` FOREIGN KEY (`auctionId`) REFERENCES `Auction` (`auctionId`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_FinishedAuction_winnerId_User_userId` FOREIGN KEY (`winnerId`) REFERENCES `User` (`userId`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Constraints for table `watchlist`
+--
+ALTER TABLE `watchlist`
+  ADD CONSTRAINT `auctionId_Auction_auctionId` FOREIGN KEY (`auctionId`) REFERENCES `Auction` (`auctionId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `userId_User_userId` FOREIGN KEY (`userId`) REFERENCES `User` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
