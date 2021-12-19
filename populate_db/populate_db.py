@@ -28,14 +28,14 @@ Base.prepare(engine, reflect = True)
 Auction = Base.classes.Auction
 Bid = Base.classes.Bid
 User = Base.classes.User
-# print(Auction.__dict__.keys())
 
 
 # faker custom data provider
 class UidProvider(BaseProvider):
     def __init__(self, generator):
         super().__init__(generator)
-        self._uids = tuple(map(lambda arr: arr[0], session.query(User.userId).all()))
+        res = session.query(User.userId, User.type).filter(User.type == 'buyer').all()
+        self._uids = tuple(map(lambda arr: arr[0], res))
 
     def get_uid(self):
         return choice(self._uids)
@@ -48,9 +48,6 @@ class AuctionIdProvider(BaseProvider):
     def get_auctionId(self):
         return choice(self._auctionIds)
 
-fake = Faker()
-fake.add_provider(VehicleProvider)
-
 
 # helpers
 def commit_or_rollback(session):
@@ -58,7 +55,11 @@ def commit_or_rollback(session):
         session.commit()
     except:
         session.rollback()
-        pass
+        raise
+
+def truncate_tables(*models):
+    for m in models:
+        session.query(m).delete()
 
 
 # funcs to populate db
@@ -77,8 +78,8 @@ def pop_users(cnt = 10):
         try:
             commit_or_rollback(session)
             i += 1
-        except IntegrityError: # happens to generate non-unique name/email etc.
-            raise
+        except IntegrityError as e: # happens to generate non-unique name/email etc.
+            print(str(e))
 
 def pop_auctions(cnt = 20):
     OPEN = 1
@@ -91,17 +92,15 @@ def pop_auctions(cnt = 20):
             startingPrice = randint(10, 100),
             itemDescription = fake.text(max_nb_chars = 50),
             itemCat = fake.vehicle_category(),
-            endDate = fake.date_between(start_date='today', end_date='+1y'),
-            curBidPrice = randint(100, 500),
-            curBidderId = fake.get_uid(),
+            endDate = fake.date_between(start_date='-1y', end_date='+1y'),
             status = OPEN
         )
         session.add(auction)
         try:
             commit_or_rollback(session)
             i += 1
-        except IntegrityError: # happens to generate non-unique name/email etc.
-            pass
+        except IntegrityError as e:
+            print(str(e))
 
 def pop_bids(cnt = 40):
     for i in range(cnt):
@@ -114,12 +113,17 @@ def pop_bids(cnt = 40):
         commit_or_rollback(session)
 
 
+fake = Faker()
+fake.add_provider(VehicleProvider)
 def run():
-    pop_users(5)
+    # truncate_tables(User)
+    # pop_users(5)
+    
+    # truncate_tables(Auction, Bid)
     fake.add_provider(UidProvider)
-    pop_auctions(10)
-    fake.add_provider(AuctionIdProvider) # to delay init for getting newly added auctionId. Can't think of better other ways for now.
-    pop_bids(20)
+    pop_auctions(20)
+    fake.add_provider(AuctionIdProvider)
+    pop_bids(40)
     print('Completed.')
 
 run()

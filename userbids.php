@@ -17,7 +17,7 @@
 
   // IMPROVE: More properly deal with user not exist and uses username
   $user_id = isset($_GET['user']) ? $_GET['user'] : $_SESSION['user'];
-  echo sprintf('<h2 class="my-3">Bids by %s</h2>', $user_id);
+  echo sprintf('<h2 class="my-3">Bids by %s</h2>', get_name_by_user_id($user_id));
 
   try{
     $results = get_bids_by_user($user_id);
@@ -30,7 +30,7 @@
   while($row = $results->fetch_assoc()){
     print_listing_li(
       $row['auctionId'], 
-      $row['title'],
+      $row["itemName"],
       $row['itemDescription'],
       $row['bidPrice'],
       get_num_bid_by_auction($row['auctionId']),

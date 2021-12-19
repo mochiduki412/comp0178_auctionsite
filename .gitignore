@@ -3,6 +3,7 @@ workspace.code*
 test*
 venv
 *.pyc
+.vscode/launch.json
 
 # Python virtual env files
 pyvenv.cfg
