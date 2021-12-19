@@ -127,7 +127,7 @@
   $related_bidders_view_sql = 
   "CREATE OR REPLACE VIEW related_bidders AS
   SELECT bidderId, COUNT(bidderId) AS commonBids
-  FROM bid
+  FROM Bid
   WHERE auctionId IN (SELECT * FROM my_auctions)
     AND bidderId != '{$_SESSION['user']}'
   GROUP BY bidderId

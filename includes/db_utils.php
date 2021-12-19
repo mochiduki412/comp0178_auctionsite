@@ -33,8 +33,11 @@
 
     function query_database($sql) {
         $conn = get_conn();
-        $result = mysqli_query($conn, $sql)
-            or die('Error making query' . mysqli_error($conn));
+        $result = mysqli_query($conn, $sql);
+        if (!$result){
+            throw new DBException("Preparation failed: " . mysqli_error($conn));
+            die('Error making query' . mysqli_error($conn)); #preserve original behavior even if exception is handled.
+        }
         mysqli_close($conn);
         return $result;
     }
