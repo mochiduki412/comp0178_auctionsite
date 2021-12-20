@@ -8,10 +8,11 @@
    
     class DBException extends Exception {}
 
-    function get_conn(){
+    function get_conn($auto_commit = true){
         // IMRPOVE: Consider pooling
         global $SERV, $USER, $PASS, $DB;
         $conn = new mysqli($SERV, $USER, $PASS);
+        $conn->autocommit($auto_commit);
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
