@@ -26,7 +26,7 @@
   
   // TODO: Perform a query to pull up auctions they might be interested in.
 
-  // Reference sources:
+  // Studied from sources:
   // https://stackoverflow.com/questions/2440826/collaborative-filtering-in-mysql
   // https://www.codeproject.com/Articles/5300620/Collaborative-Filtering-in-MySQL-A-Tutorial
   // https://en.wikipedia.org/wiki/Collaborative_filtering
@@ -93,9 +93,8 @@
       $row['itemDescription'],
       $row['bidMax'],
       $row['bidCnt'],
-      new DateTime($row['endDate'])
+      new DateTime($row['endDate']),
+      $match_strengh = $row['total_rank']
     );
   }
-
-  
 ?>
