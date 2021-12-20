@@ -30,9 +30,8 @@
             WHERE auctionId = ?)) A
           INNER JOIN User
           on A.bidderId = User.userId";
-  $bid_max_info = prepare_bind_excecute($sql, 'i', $item_id)->fetch_assoc();
 
-  // $bid_max_info = get_max_bid_info_by_auction($item_id)->fetch_assoc();
+  $bid_max_info = prepare_bind_excecute($sql, 'i', $item_id)->fetch_assoc();
   $bid_max_amount = $bid_max_info['bidPrice'];
   $user_max_bid = $bid_max_info['firstName'] . ' ' . $bid_max_info['lastName'];
   $user_id_max_bid = $bid_max_info['bidderId'];

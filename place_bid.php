@@ -13,8 +13,8 @@
     $item_id = $_POST['itemId'];
     $url_back = 'listing.php?item_id=' . $item_id;
     if(!is_login()) redirect($url_back, 'You are not logged in.');
-
     $user_id = $_SESSION['user'];
+    
     $price = (int) $_POST['bidPrice'];
 
     $sql = "SELECT * FROM Auction WHERE auctionId = ?";
